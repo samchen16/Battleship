@@ -1,5 +1,7 @@
 package com.mygdx.battleship;
 
+import java.awt.Point;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,12 +10,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Battleship extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
+	GameState gamestate;
+	AttackingPanel p1AttackingPanel;
+	AttackingPanel p2AttackingPanel;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		gamestate = new GameState();
+		p1AttackingPanel = new AttackingPanel (gamestate.p1Grid);
+		p2AttackingPanel = new AttackingPanel (gamestate.p2Grid);
 	}
 
 	@Override
@@ -21,7 +27,12 @@ public class Battleship extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(img, 0, 0);
+		p1AttackingPanel.draw(batch);
 		batch.end();
+	}
+	
+	public void dispose () {
+		p1AttackingPanel.dispose();
+		p2AttackingPanel.dispose();
 	}
 }

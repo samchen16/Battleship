@@ -4,15 +4,20 @@ import java.awt.Point;
 
 public class Grid {
 
-	private Point numCells;
+	private float cellSize;
+	private int numCellsX;
+	private int numCellsY;
 	private int numHits;
 	private int numMisses;
+	private int numShips;
 	private boolean[][] hit;
 	private boolean[][] attackable;
 	private Ship[][] ships;
 	
-	public Grid (int x, int y) {
-		numCells = new Point(x,y);
+	public Grid (int x, int y, int cs) {
+		cellSize = cs;
+		numCellsX = x;
+		numCellsY = y;
 		numHits = 0;
 		numMisses = 0;
 		hit = new boolean[x][y];
@@ -27,8 +32,20 @@ public class Grid {
 		}
 	}
 	
-	public Point getNumCells () {
-		return numCells;
+	public float getCellSize () {
+		return cellSize;
+	}
+	
+	public int getNumCellsX () {
+		return numCellsX;
+	}
+	
+	public int getNumCellsY () {
+		return numCellsY;
+	}
+	
+	public int getNumShips () {
+		return numShips;
 	}
 	
 	public int getNumHits () {
@@ -51,20 +68,31 @@ public class Grid {
 		return attackable[x][y];
 	}
 	
+	public boolean hasShip (int x, int y) {
+		if (ships[x][y] != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public void addShip (Ship s) {
 		for (int x = 0; x < s.getWidth(); x++) {
 			for (int y = 0; y < s.getHeight(); y++) {
 				ships[s.getX() + x][s.getY() + y] = s;
 			}
 		}
+		numShips++;
 	}
 	
-	public void removeShip (Ship s) {
+	private void removeShip (Ship s) {
 		for (int x = 0; x < s.getWidth(); x++) {
 			for (int y = 0; y < s.getHeight(); y++) {
 				ships[s.getX() + x][s.getY() + y] = null;
 			}
 		}
+		numShips--;
 	}
 	
 	private void setHit (int x, int y) {
@@ -85,9 +113,10 @@ public class Grid {
 			return null;
 		}
 		
-		Ship s = ships[x][y];
-		if (s != null) {
+		Ship s = null;
+		if (hasShip(x,y)) {
 			setHit(x,y);
+			s = ships[x][y];
 			removeShip(s);
 		}
 		else {
