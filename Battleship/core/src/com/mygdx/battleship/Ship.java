@@ -9,7 +9,6 @@ public class Ship {
 	private int bottomRightY;
 	private boolean placed;
 	public Ship(int w, int h){
-		
 		width = w;
 		height = h;
 		placed = false;
