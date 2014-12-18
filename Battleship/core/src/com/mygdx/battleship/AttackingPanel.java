@@ -16,7 +16,7 @@ public class AttackingPanel extends GridPanel{
 	}
 	
 	public void draw (SpriteBatch batch) {
-	    super.draw(batch);
+	    //super.draw(batch);
 		
 	    for(int x = 0; x < grid.getNumCellsX(); x++) {
 			for (int y = 0; y < grid.getNumCellsY(); y++) {
