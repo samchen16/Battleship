@@ -34,6 +34,8 @@ public class Battleship extends Game {
 	Label p1Stats;
 	Label p2Stats;
 	
+	AIAttackController attackAI;
+	
 	@Override
 	public void create () {
 		stage = new Stage();
@@ -76,6 +78,9 @@ public class Battleship extends Game {
 		p2Stats = new Label(" ", labelStyle);
 		rootTable.add(p1Stats).expand().fill();
 		rootTable.add(p2Stats).expand().fill();
+		
+		// Create attacking AI and ship placement AI
+		attackAI = new AIAttackController(gamestate.p1Grid);
 		
 		
 //		p1AttackingPanel = new PlacementPanel (gamestate.p1Grid, playerView.getWidth(), playerView.getHeight());
@@ -124,6 +129,15 @@ public class Battleship extends Game {
 			p1View.attackPanel.setDisabled(true);
 			p2View.attackPanel.setDisabled(false);
 		}
+		
+		// If AI's turn, then let AI attack
+		if (!gamestate.playerTurn) {
+			attackAI.decideMove();
+			attackAI.makeMove();
+			gamestate.playerTurn = !gamestate.playerTurn;
+			Gdx.graphics.requestRendering();
+		}
+		
 	}
 	@Override
 	public void render () {

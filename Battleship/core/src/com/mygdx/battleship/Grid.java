@@ -32,16 +32,6 @@ public class Grid {
 		}
 	}
 	
-	public boolean isEmpty() {
-		boolean empty = true;
-		for (int x = 0; x < ships.length; x++) {
-			for (int y = 0; y < ships.length; y++) {
-				empty = (empty && !hasShip(x,y));
-			}
-		}
-		return empty;
-	}
-	
 	public float getCellSize () {
 		return cellSize;
 	}
@@ -87,24 +77,38 @@ public class Grid {
 		}
 	}
 	
-	// Adds ship at position (i,j) starting from bottom left
-	public void addShip (Ship s) {
+	public boolean canPlaceShip (Ship s) {
+		boolean canPlace = true;
 		for (int x = 0; x < s.getWidth(); x++) {
 			for (int y = 0; y < s.getHeight(); y++) {
-				ships[s.getX() + x][s.getY() + y] = s;
+				canPlace = (canPlace && ships[s.getX() + x][s.getY() + y] == null);
 			}
 		}
-		numShips++;
+		return canPlace;
 	}
 	
-	private void removeShip (Ship s) {
-		for (int x = 0; x < s.getWidth(); x++) {
-			for (int y = 0; y < s.getHeight(); y++) {
-				ships[s.getX() + x][s.getY() + y] = null;
+	// Adds ship at position (i,j) starting from bottom left
+	public boolean addShip (Ship s) {
+		boolean canPlace = canPlaceShip(s);
+		if (canPlace) {
+			for (int x = 0; x < s.getWidth(); x++) {
+				for (int y = 0; y < s.getHeight(); y++) {
+					ships[s.getX() + x][s.getY() + y] = s;
+				}
 			}
+			numShips++;
 		}
-		numShips--;
+		return canPlace;
 	}
+	
+	 public void removeShip (Ship s) {
+		 for (int x = 0; x < s.getWidth(); x++) {
+			 for (int y = 0; y < s.getHeight(); y++) {
+				 ships[s.getX() + x][s.getY() + y] = null;
+             }
+         }
+         numShips--;
+	 }
 	
 	private void setHit (int x, int y) {
 		hit[x][y] = true;
@@ -119,21 +123,24 @@ public class Grid {
 	}
 	
 	// Returns ship that got attacked or null if none
-	public Ship attack (int x, int y) {
+	public void attack (int x, int y) {
 		if (!isAttackable(x,y)) {
-			return null;
+			return;
 		}
 		
-		Ship s = null;
 		if (hasShip(x,y)) {
 			setHit(x,y);
-			s = ships[x][y];
-			removeShip(s);
+			Ship s = ships[x][y];
+			ships[x][y] = null;
+			s.health--;
+			if (s.health == 0) {
+				// Announce a ship has been destroyed
+				numShips--;
+			}
 		}
 		else {
 			setMiss(x,y);
 		}
-		return s;
 	}
 	
 }

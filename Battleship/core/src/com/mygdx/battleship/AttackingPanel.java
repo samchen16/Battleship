@@ -5,15 +5,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 class AttackingPanelListener extends ChangeListener {
 	
@@ -37,7 +32,7 @@ class AttackingPanelListener extends ChangeListener {
     	if (!grid.isAttackable(b.x, b.y)) {
     		return;
     	}
-		Ship s = grid.attack(b.x, b.y);
+		grid.attack(b.x, b.y);
     	
     	// Change view depending on whether attack hit or missed
     	if (grid.isHit(b.x, b.y)) {
