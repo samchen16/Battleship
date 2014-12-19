@@ -13,9 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 class PlacementPanelListener extends ChangeListener {
 	Grid grid;
 	GameState gamestate;
+	PlacementPanel placementpanel;
 	public PlacementPanelListener (Grid g, GameState gs, PlacementPanel pp) {
 		grid = g;
 		gamestate = gs;
+		placementpanel = pp;
 		// Connect to view
 		for (int i = 0; i < pp.actors.length; i++) {
 			for (int j = 0; j < pp.actors [i].length; j++) {
@@ -26,16 +28,29 @@ class PlacementPanelListener extends ChangeListener {
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
 		GridButton b = (GridButton) actor;
-    	if (grid.hasShip(b.x, b.y)||gamestate.selectedShip == null) {
+    	if (gamestate.selectedShip == null) {
     		return;
     	}
 		Ship selected = gamestate.getSelectedShip();
 		if(selected.isPlaced()){
 			grid.removeShip(selected);
 		}
-/*		if(selected.setLocation(b.x, b.y)){
+		int x = selected.getX();
+		int y = selected.getY();
+		selected.setLocation(b.x, b.y);
+		if(grid.addShip(selected)){
+			for (int i = 0; i < selected.getWidth(); i++) {
+				for (int j = 0; j < selected.getHeight(); j++) {
+					System.out.println("actors = "+placementpanel.actors);
+					System.out.println("x = "+(b.x+i)+" y = "+(b.y+j)+" "+placementpanel.actors[b.x-i][b.y-j]);
+					((GridButton) placementpanel.actors[b.x+i][grid.getNumCellsY() -1 -(b.y+j)]).setText("s");
+				}
+			}
 			gamestate.selectedShip = null;
-		}*/
+		}
+		else{
+			selected.setLocation(x, y);
+		}
 	}
 }
 

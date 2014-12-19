@@ -10,14 +10,12 @@ public class GameState {
 	public boolean playerTurn;
 
 	public boolean shipPlacementPhase;
-	private Ship[] shipTypes;
 	private int gridSizeX = 10;
 	private int gridSizeY = 10;
 	private int cellSize = 25;
 
 	
 	public GameState (Ship[] s) {
-		shipTypes = s;
 		p1Grid = new Grid(gridSizeX, gridSizeY, cellSize);
 		p2Grid = new Grid(gridSizeX, gridSizeY, cellSize);
 		playerTurn = true;

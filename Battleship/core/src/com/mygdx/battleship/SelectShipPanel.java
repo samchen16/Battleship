@@ -1,5 +1,7 @@
 package com.mygdx.battleship;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,15 +14,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 class SelectShipPanelListener extends ChangeListener {
 	Grid grid;
 	GameState gamestate;
+	SelectShipPanel selectshippanel;
 	public SelectShipPanelListener (Grid g, GameState gs, SelectShipPanel ssp) {
 		grid = g;
 		gamestate = gs;
+		selectshippanel = ssp;
 		// Connect to view
 		for (int i = 0; i < ssp.shipButtons.length; i++) {
 			ssp.shipButtons[i].addListener(this);
@@ -29,21 +34,49 @@ class SelectShipPanelListener extends ChangeListener {
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
 		GridButton b = (GridButton) actor;
-    	if (grid.hasShip(b.x, b.y)) {
+		System.out.println(selectshippanel);
+		System.out.println(selectshippanel.gbpToShip);
+		System.out.println(selectshippanel.gbpToShip.get(b));
+		gamestate.selectedShip = selectshippanel.gbpToShip.get(b);
+	}
+}
+class ToggleOrientationListener extends ChangeListener {
+	GameState gamestate;
+	public ToggleOrientationListener (Grid g, GameState gs, SelectShipPanel ssp) {
+		ssp.toggleOrientation.addListener(this);
+	}
+	@Override
+	public void changed(ChangeEvent event, Actor actor) {
+		TextButton b = (TextButton) actor;
+    	if (gamestate.selectedShip == null) {
     		return;
     	}
-		Ship selected = gamestate.getSelectedShip();
-		if(selected.isPlaced()&&!(selected.getX()==b.x&&selected.getY()==b.y)){ //if already placed but trying to place elsewhere
-			
-		}
-    	
+		gamestate.selectedShip.changeOrientation();    	
+	}
+}
+
+class FinishPlacementListener extends ChangeListener {
+	GameState gamestate;
+	SelectShipPanel ssp;
+	
+	public FinishPlacementListener (Grid g, GameState gs, SelectShipPanel ssp) {
+		ssp.finishPlacement.addListener(this);
+	}
+	@Override
+	public void changed(ChangeEvent event, Actor actor) {
+		
 	}
 }
 
 public class SelectShipPanel extends Table {
-	private Ship selectedShip;
+	public HashMap<GridButton, Ship> gbpToShip;
 	public GridButtonPanel[] shipButtons;
-	public SelectShipPanel (Ship[] ships) {
+	public TextButton toggleOrientation;
+	public TextButton finishPlacement;
+	public Ship[] ships;
+	public SelectShipPanel (Ship[] s) {
+		ships = s;
+		gbpToShip = new HashMap<GridButton, Ship>();
 		Skin skin = new Skin();
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
@@ -65,19 +98,28 @@ public class SelectShipPanel extends Table {
 		LabelStyle labelStyle = new LabelStyle (new BitmapFont(), new Color(1.0f,1.0f,1.0f,1.0f));
 		this.add(new Label("Select a ship below, \nthen click any grid square to place.", labelStyle)).pad(5);
 		this.row();
+		toggleOrientation = new TextButton("Flip Selected", skin);
+		this.add(toggleOrientation).pad(5);
+		this.row();
 		Table t = new Table();
 		//setSkin(skin);
 		//this.add(new Label("Select a ship to place", skin));
-		GridButtonPanel[] shipButtons = new GridButtonPanel[ships.length];
+		//System.out.println("shipbuttons lengtg = "+ships);
+		shipButtons = new GridButtonPanel[ships.length];
 		for(int i = 0; i<shipButtons.length; i++){
 			shipButtons[i] = new GridButtonPanel(ships[i].getWidth(), ships[i].getHeight(), "=");
 			shipButtons[i].makeButtonGrid(skin);
 			shipButtons[i].pad(10);
-			t.add(shipButtons[i]);//.expand().fill();
-			//this.row();
-//			shipButtons[i].debug();
+			t.add(shipButtons[i]);
+			for(int j = 0; j<ships[i].getWidth(); j++)
+			{		
+				for(int k = 0; k<ships[i].getHeight(); k++)
+					gbpToShip.put((GridButton) shipButtons[i].actors[j][k], ships[i]);
+			}
 		}
 		this.add(t);
-
+		this.row();
+		finishPlacement = new TextButton("Done Placing All", skin);
+		this.add(finishPlacement).pad(5);
 	}
 }

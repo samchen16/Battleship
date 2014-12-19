@@ -5,24 +5,33 @@ import com.badlogic.gdx.math.Vector2;
 public class Ship {
 	private int width;
 	private int height;
-	private int topLeftX;
-	private int topLeftY;
-	private int bottomRightX;
-	private int bottomRightY;
+	private int bottomLeftX;
+	private int bottomLeftY;
+	private int topRightX;
+	private int topRightY;
 	public int health;
 	private boolean placed;
 	public Ship(int w, int h){
 		width = w;
 		height = h;
-		placed = false;
+		setLocation(-1, -1);
 		health = w * h;
 	}
 	public void setLocation(int x, int y){
-		topLeftX = x;
-		topLeftY = y;
-		bottomRightX = x+width;
-		bottomRightY = y+height;
-		placed = true;
+		if(x == -1 || y == -1){
+			bottomLeftX = -1;
+			bottomLeftY = -1;
+			topRightX = -1;
+			topRightY = -1;
+			placed = false;
+		}
+		else{
+			bottomLeftX = x;
+			bottomLeftY = y;
+			topRightX = x+width;
+			topRightY = y+height;
+			placed = true;
+		}
 	}
 	public void changeOrientation(){
 		int temp = width;
@@ -33,10 +42,10 @@ public class Ship {
 		return placed;
 	}
 	public int getX(){
-		return topLeftX;
+		return bottomLeftX;
 	}
 	public int getY(){
-		return topLeftY;
+		return bottomLeftY;
 	}
 	public int getWidth(){
 		return width;
