@@ -35,8 +35,7 @@ public class Battleship extends Game {
 	GameState gamestate;
 	PlayerPanel p1View;
 	PlayerPanel p2View;
-	PlacementPanel p1AttackingPanel;
-	PlacementPanel p2AttackingPanel;
+	SelectShipPanel shipSelect;
 	Table rootTable;
 	SplitPane sp;
 	Stage stage;
@@ -51,11 +50,13 @@ public class Battleship extends Game {
 		rootTable.debug();
 		p1View = new PlayerPanel(gamestate.p1Grid, gamestate.p2Grid, false);
 		p2View = new PlayerPanel(gamestate.p2Grid, gamestate.p1Grid, true);
-		rootTable.add(p2View).pad(5).expand().fill();		
+		/*rootTable.add(p2View).pad(5).expand().fill();		
 		rootTable.add(p1View).pad(5).expand().fill();
 		p1View.debug();
 		p2View.debug();
-		
+		*/
+		shipSelect = new SelectShipPanel(miltonBradley);
+		rootTable.add(shipSelect).expand().fill();
 		// Disables automatic rendering calls
 		Gdx.graphics.setContinuousRendering(false);
 		Gdx.graphics.requestRendering();
