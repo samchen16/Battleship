@@ -1,11 +1,18 @@
 package com.mygdx.battleship;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Comparator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.mygdx.battleship.geneticalgo.GeneticAlgorithm;
 import com.mygdx.battleship.geneticalgo.Individual;
 import com.mygdx.battleship.geneticalgo.Population;
 
@@ -14,7 +21,7 @@ public class AIPlaceController extends Actor {
 	PlacementPanel placementPanel;
 	Random random1;
 	ArrayList<Point> placeList; //list of possible locations
-	Individual currentPlacement;
+	int currentPopIndex = 0;
 	private Ship[] shipPlacement;
 	/* GA parameters */
     private static final double uniformRate = 0.5;
@@ -22,7 +29,7 @@ public class AIPlaceController extends Actor {
     private static final int tournamentSize = 5;
     private static final boolean elitism = true;
 
-	public AIPlaceController (Grid g, Ship[] ships, PlacementPanel pp) {
+	public AIPlaceController (Grid g, Ship[] ships, PlacementPanel pp) throws IOException {
 		grid = g;
 		random1 = new Random();
 		placeList = new ArrayList<Point>();
@@ -33,11 +40,47 @@ public class AIPlaceController extends Actor {
 				placeList.add(new Point(x,y));
 			}
 		}
-		Ship[] finalPlacement;
+		Ship[] finalPlacement = null;
 //		while(finalPlacement==null){
-			Population p = new Population(placeList.size()/5, ships.length*2);
+		//	Population p = new Population(placeList.size()/5, ships.length*2);
 			
 //		}
+		Population p;
+	      FileInputStream fis;
+		try {
+			fis = new FileInputStream("population.tmp");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			currentPopIndex = ois.readInt();
+			p = (Population) ois.readObject();
+		    ois.close();
+		} catch (Exception e) {
+			currentPopIndex = 0;
+			p = new Population(placeList.size()/5, ships.length*2);
+		}
+     // Population 
+      while(finalPlacement == null){
+    	  if(currentPopIndex>=p.getSize()){
+    		  currentPopIndex = 0;
+  			  p = GeneticAlgorithm.evolve(p);
+  			  writeOutput(currentPopIndex, p);
+    	  }
+    	  finalPlacement = evaluate(p.getIndividual(currentPopIndex));
+    	  for(Ship s: finalPlacement){
+    		  if(!g.addShip(s)){
+    			  finalPlacement = null;
+    			  break;
+    		  }
+    	  }
+    	  currentPopIndex++;
+      }
+	}
+	public void writeOutput(int i, Population p) throws IOException{
+			FileOutputStream fos = new FileOutputStream("population.tmp");
+	      ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+	      oos.writeInt(i);
+	      oos.writeObject(p);
+	      oos.close();
 	}
 	public Ship[] evaluate(Individual indiv){
 		for(int i = 0; i<shipPlacement.length; i++){

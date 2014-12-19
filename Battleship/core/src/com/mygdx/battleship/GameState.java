@@ -10,6 +10,8 @@ public class GameState {
 	public boolean playerTurn;
 
 	public boolean shipPlacementPhase;
+	public boolean playerPlacementDone;
+	public boolean AIPlacementDone;
 	private int gridSizeX = 10;
 	private int gridSizeY = 10;
 	private int cellSize = 25;
