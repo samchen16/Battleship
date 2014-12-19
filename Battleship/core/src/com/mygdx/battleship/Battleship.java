@@ -32,7 +32,7 @@ public class Battleship extends Game {
 	Stage stage;
 	Table rootTable;
 	
-	//AIAttackController attackAI;
+	AIAttackController attackAI;
 	
 	@Override
 	public void create () {
