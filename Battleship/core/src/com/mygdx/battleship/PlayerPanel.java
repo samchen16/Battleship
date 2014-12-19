@@ -11,7 +11,7 @@ public class PlayerPanel extends Table {
 		this.add(attackPanel).pad(5).expand().fill();
 		this.row();
 		this.add(placementPanel).pad(5).expand().fill();
-		placementPanel.debug();
+		//placementPanel.debug();
 	}
 /*	public void resize(int width, int height) {
 		System.out.println("playerPanel resize "+width +" , "+ height);

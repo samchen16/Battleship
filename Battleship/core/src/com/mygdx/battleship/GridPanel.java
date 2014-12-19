@@ -33,22 +33,23 @@ public abstract class GridPanel extends Table{
 	protected Grid grid;
 //	protected Vector2 position;
 	private Texture gridTex;
-	public Actor[][] actors;
+	private Actor[][] actors;
 	protected Skin skin;
 	public GridPanel (Grid g, Vector2 pos){
 		//int actorWidth = Gdx.graphics.getWidth() / rowActors;
 		//int actorHeight = Gdx.graphics.getHeight() /  columnActors;
 		grid = g;
 //		position = pos;
-		actors = new Actor[g.getNumCellsX()][g.getNumCellsY()];	
+		actors = new Actor[g.getNumCellsX()][g.getNumCellsY()];
+		this.debug();
 		//setFillParent(true);
 	}
 	
-	protected void makeButtonGrid(Skin s){
+	protected void makeButtonGrid(Skin s, ChangeListener cl){
 		for (int i = 0; i < actors[0].length; i++){
 			  for (int j = 0; j < actors.length; j++){
-				  actors[i][j] = new GridButton("T", s, i, j);
-				  this.add(actors[i][j]).expand();//.width(grid.getCellSize()).height(grid.getCellSize());
+				  actors[i][j] = new TextButton(" ", s);
+				  this.add(actors[i][j]).expand().fill();//.width(grid.getCellSize()).height(grid.getCellSize());
 //				  this.add(actors[i][j]).width(this.getMaxWidth()/actors[0].length).height(this.getMaxHeight()/actors.length);
 					System.out.println("actor["+i+"]["+j+"]= "+actors[i][j].getWidth() +" , "+ +actors[i][j].getHeight());
 					System.out.println("actor["+i+"]["+j+"] at "+actors[i][j].getX() +" , "+ +actors[i][j].getY());

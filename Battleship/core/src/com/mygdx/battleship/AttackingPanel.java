@@ -62,7 +62,7 @@ public class AttackingPanel extends GridPanel{
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+		textButtonStyle.checked = skin.newDrawable("white", Color.RED);
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);

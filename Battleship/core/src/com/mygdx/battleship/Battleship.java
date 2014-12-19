@@ -11,19 +11,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class Battleship extends Game {
 	
-	public static final int WIDTH=480,HEIGHT=800;
+	public static final int WIDTH=700,HEIGHT=700;
 	
 	SpriteBatch batch;
 	GameState gamestate;
@@ -43,13 +48,23 @@ public class Battleship extends Game {
 		Gdx.input.setInputProcessor(stage);
 		Skin skin = new Skin();
 		// Generate a 1x1 white texture and store it in the skin named "white".
-		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
+		int width = 30;
+		int height = 20;
+		Pixmap pixmap = new Pixmap(width, height, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);
 		pixmap.fill();
+		for(int i = 0; i<=width; i++){
+		}
 		skin.add("white", new Texture(pixmap));
 		// Store the default libgdx font under the name "default".
 		skin.add("default", new BitmapFont());
-		// Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
+		ImageButtonStyle style = new ImageButtonStyle();
+		style.imageUp = skin.newDrawable("white", Color.DARK_GRAY);
+		style.imageDown = skin.newDrawable("white", Color.BLUE);
+		ImageButton iconButton = new ImageButton(style);
+		//iconButton.setWidth(width);
+		//iconButton.setHeight(height);
+/*		// Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
@@ -57,8 +72,8 @@ public class Battleship extends Game {
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
-		TextButton nameLabel = new TextButton("text", skin);
-		
+		TextButton nameLabel = new TextButton("", skin);
+*/		
 		//stage.getViewport().setCamera(camera);
 		//batch = new SpriteBatch();
 		gamestate = new GameState();
@@ -70,10 +85,11 @@ public class Battleship extends Game {
 		//rootTable.add(new TextButton("text2", skin)).expand();
 		p1View = new PlayerPanel(gamestate.p1Grid, gamestate.p2Grid, false);
 		p2View = new PlayerPanel(gamestate.p2Grid, gamestate.p1Grid, true);
-		rootTable.add(p2View).pad(5).expand().fill();		
-		rootTable.add(p1View).pad(5).expand().fill();
-		p1View.debug();
-		p2View.debug();
+		rootTable.add(iconButton);
+		//rootTable.add(p2View).pad(5).expand().fill();		
+		//rootTable.add(p1View).pad(5).expand().fill();
+		//p1View.debug();
+		//p2View.debug();
 		
 		// Disables automatic rendering calls
 		Gdx.graphics.setContinuousRendering(false);

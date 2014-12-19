@@ -1,5 +1,7 @@
 package com.mygdx.battleship;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class Ship {
 	private int width;
 	private int height;
