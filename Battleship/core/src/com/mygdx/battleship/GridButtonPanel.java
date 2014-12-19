@@ -52,7 +52,7 @@ public abstract class GridButtonPanel extends Table{
 	protected void makeButtonGrid(Skin s){
 		for (int j = 0; j < numCellsY; j++){
 			for (int i = 0; i < numCellsX; i++){
-				  actors[i][j] = new GridButton("~", s, i, j);
+				  actors[i][j] = new GridButton("~", s, i, numCellsY -1 -j);
 				  this.add(actors[i][j]).expand().fill();
 			  }
 			  this.row();
