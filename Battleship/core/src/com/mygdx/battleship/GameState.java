@@ -23,13 +23,19 @@ public class GameState {
 		Ship s = new Ship(5,1);
 		s.setLocation(0, 0);
 		p1Grid.addShip(s);
+		s = new Ship(2,1);
+		s.setLocation(7, 0);
+		p1Grid.addShip(s);
 		//p2Grid.addShip(new Ship(2,1));
 		//p2Grid.addShip(new Ship(3,1));
 		//p2Grid.addShip(new Ship(3,1));
 		//p2Grid.addShip(new Ship(4,1));
-		Ship ss = new Ship(5,1);
-		ss.setLocation(0, 0);
-		p2Grid.addShip(ss);
+		s = new Ship(5,1);
+		s.setLocation(0, 0);
+		p2Grid.addShip(s);
+		s = new Ship(2,1);
+		s.setLocation(7, 0);
+		p2Grid.addShip(s);
 	}
 	
 	public GameState (int x, int y, int cs) {

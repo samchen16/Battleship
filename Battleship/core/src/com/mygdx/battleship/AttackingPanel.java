@@ -76,4 +76,5 @@ public class AttackingPanel extends GridPanel{
 		skin.add("default", textButtonStyle);
 		makeButtonGrid(skin);
 	}
+	
 }

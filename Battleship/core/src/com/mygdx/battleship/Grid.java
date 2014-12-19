@@ -32,6 +32,16 @@ public class Grid {
 		}
 	}
 	
+	public boolean isEmpty() {
+		boolean empty = true;
+		for (int x = 0; x < ships.length; x++) {
+			for (int y = 0; y < ships.length; y++) {
+				empty = (empty && !hasShip(x,y));
+			}
+		}
+		return empty;
+	}
+	
 	public float getCellSize () {
 		return cellSize;
 	}

@@ -76,4 +76,13 @@ public abstract class GridPanel extends Table{
 		gridTex.dispose();
 	}
 	*/
+	
+	public void setDisabled(boolean b) {
+		for (int i = 0; i < actors.length; i++) {
+			for (int j = 0; j < actors [i].length; j++) {
+				GridButton gb = (GridButton) actors[i][j];
+				gb.setDisabled(b);
+			}
+		}
+	}
 }

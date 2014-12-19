@@ -86,9 +86,9 @@ public class Battleship extends Game {
 		//rootTable.add(new TextButton("text2", skin)).expand();
 		p1View = new PlayerPanel(gamestate.p1Grid, gamestate.p2Grid, false);
 		p2View = new PlayerPanel(gamestate.p2Grid, gamestate.p1Grid, true);
-		rootTable.add(iconButton);
-		//rootTable.add(p2View).pad(5).expand().fill();		
-		//rootTable.add(p1View).pad(5).expand().fill();
+		//rootTable.add(iconButton);
+		rootTable.add(p2View).pad(5).expand().fill();		
+		rootTable.add(p1View).pad(5).expand().fill();
 		//p1View.debug();
 		//p2View.debug();
 		
@@ -121,8 +121,30 @@ public class Battleship extends Game {
 	}*/
 	
 	public void update () {
+		// Check for player wins
+		if (gamestate.p1Grid.isEmpty()) {
+			System.out.println("Player 2 wins!");
+		}
+		else if (gamestate.p2Grid.isEmpty()) {
+			System.out.println("Player 1 wins!");
+		}
+		
+		// Disable buttons if it is not that player's turn
+		if (gamestate.playerTurn) {
+			p2View.attackPanel.setDisabled(true);
+			p1View.attackPanel.setDisabled(false);
+		}
+		else {
+			p1View.attackPanel.setDisabled(true);
+			p2View.attackPanel.setDisabled(false);
+		}
+		
+		
+		
+		
 		
 	}
+	
 	@Override
 	public void render () {
 		if (!paused) {
