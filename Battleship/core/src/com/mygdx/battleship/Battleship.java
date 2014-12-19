@@ -85,6 +85,26 @@ public class Battleship extends Game {
 	}*/
 	
 	public void update () {
+		// Check for player wins
+		if (gamestate.p1Grid.isEmpty()) {
+			System.out.println("Player 2 wins!");
+		}
+		else if (gamestate.p2Grid.isEmpty()) {
+			System.out.println("Player 1 wins!");
+		}
+		
+		// Disable buttons if it is not that player's turn
+		if (gamestate.playerTurn) {
+			p2View.attackPanel.setDisabled(true);
+			p1View.attackPanel.setDisabled(false);
+		}
+		else {
+			p1View.attackPanel.setDisabled(true);
+			p2View.attackPanel.setDisabled(false);
+		}
+		
+		
+		
 		
 	}
 	@Override
