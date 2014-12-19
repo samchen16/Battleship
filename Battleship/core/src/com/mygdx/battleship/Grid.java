@@ -77,6 +77,7 @@ public class Grid {
 		}
 	}
 	
+	// Adds ship at position (i,j) starting from bottom left
 	public void addShip (Ship s) {
 		for (int x = 0; x < s.getWidth(); x++) {
 			for (int y = 0; y < s.getHeight(); y++) {

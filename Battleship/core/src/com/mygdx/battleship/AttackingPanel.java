@@ -16,8 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 class AttackingPanelListener extends ChangeListener {
+	
 	Grid grid;
 	GameState gamestate;
+	
 	public AttackingPanelListener (Grid g, GameState gs, AttackingPanel ap) {
 		grid = g;
 		gamestate = gs;
@@ -32,16 +34,20 @@ class AttackingPanelListener extends ChangeListener {
 	
 	public void changed(ChangeEvent event, Actor actor) {
 		GridButton b = (GridButton) actor;
-    	grid.attack(b.x, b.y);
-    	if (grid.isAttackable(b.x, b.y)){
-    		b.setText(" ");
-    	}
-    	else if (grid.isHit(b.x, b.y)) {
+    	Ship s = grid.attack(b.x, b.y);
+    	
+    	// Change view depending on whether attack hit or missed
+    	if (grid.isHit(b.x, b.y)) {
     		b.setText("X");
+    		System.out.println("hit " + b.x + " " + b.y);
     	}
     	else if (grid.isMiss(b.x, b.y)) {
     		b.setText("O");
+    		System.out.println("miss " + b.x + " " + b.y);
     	}
+    	
+    	// Switches turns
+    	gamestate.playerTurn = !gamestate.playerTurn;
 	}
 }
 
@@ -49,15 +55,17 @@ public class AttackingPanel extends GridPanel{
 	
 	public AttackingPanel (Grid g) {
 		super(g, new Vector2(100,0));
-		
 		skin = new Skin();
+		
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
+		
 		// Store the default libgdx font under the name "default".
 		skin.add("default", new BitmapFont());
+		
 		// Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
@@ -67,9 +75,5 @@ public class AttackingPanel extends GridPanel{
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
 		makeButtonGrid(skin);
-	}
-	
-	public AttackingPanel (Grid g, Vector2 pos) {
-		super(g, pos);
 	}
 }

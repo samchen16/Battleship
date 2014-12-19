@@ -47,11 +47,11 @@ public abstract class GridPanel extends Table{
 	protected void makeButtonGrid(Skin s){
 		for (int i = 0; i < actors[0].length; i++){
 			  for (int j = 0; j < actors.length; j++){
-				  actors[i][j] = new GridButton("T", s, i, j);
+				  actors[i][j] = new GridButton("T", s, j, grid.getNumCellsY() -1 -i);
 				  this.add(actors[i][j]).expand();//.width(grid.getCellSize()).height(grid.getCellSize());
 //				  this.add(actors[i][j]).width(this.getMaxWidth()/actors[0].length).height(this.getMaxHeight()/actors.length);
-					System.out.println("actor["+i+"]["+j+"]= "+actors[i][j].getWidth() +" , "+ +actors[i][j].getHeight());
-					System.out.println("actor["+i+"]["+j+"] at "+actors[i][j].getX() +" , "+ +actors[i][j].getY());
+					//System.out.println("actor["+i+"]["+j+"]= "+actors[i][j].getWidth() +" , "+ +actors[i][j].getHeight());
+					//System.out.println("actor["+i+"]["+j+"] at "+actors[i][j].getX() +" , "+ +actors[i][j].getY());
 			  }
 			   this.row();
 		}
