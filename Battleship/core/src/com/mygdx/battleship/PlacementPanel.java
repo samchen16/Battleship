@@ -14,8 +14,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 class PlacementPanelListener extends ChangeListener {
 	Grid grid;
-	public PlacementPanelListener (Grid g) {
+	GameState gamestate;
+	public PlacementPanelListener (Grid g, GameState gs, PlacementPanel pp) {
 		grid = g;
+		gamestate = gs;
+		
+		// Connect to view
+		for (int i = 0; i < pp.actors.length; i++) {
+			for (int j = 0; j < pp.actors [i].length; j++) {
+				pp.actors[i][j].addListener(this);
+			}
+		}
 	}
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
@@ -29,7 +38,6 @@ class PlacementPanelListener extends ChangeListener {
 public class PlacementPanel extends GridPanel{
 	public PlacementPanel (Grid g) {
 		super(g, new Vector2(0,0));
-		PlacementPanelListener listener = new PlacementPanelListener(g);
 		skin = new Skin();
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
@@ -46,7 +54,7 @@ public class PlacementPanel extends GridPanel{
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
-		makeButtonGrid(skin, listener);
+		makeButtonGrid(skin);
 	}
 /*	public PlacementPanel (Grid g, Vector2 pos) {
 		super(g, pos);

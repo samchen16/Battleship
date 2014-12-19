@@ -17,21 +17,30 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 class AttackingPanelListener extends ChangeListener {
 	Grid grid;
-	public AttackingPanelListener (Grid g) {
+	GameState gamestate;
+	public AttackingPanelListener (Grid g, GameState gs, AttackingPanel ap) {
 		grid = g;
+		gamestate = gs;
+		
+		// Connect to view
+		for (int i = 0; i < ap.actors.length; i++) {
+			for (int j = 0; j < ap.actors [i].length; j++) {
+				ap.actors[i][j].addListener(this);
+			}
+		}
 	}
 	
 	public void changed(ChangeEvent event, Actor actor) {
-		GridButton gb = (GridButton) actor;
-    	grid.attack(gb.x, gb.y);
-    	if (grid.isAttackable(gb.x, gb.y)){
-    		gb.setText(" ");
+		GridButton b = (GridButton) actor;
+    	grid.attack(b.x, b.y);
+    	if (grid.isAttackable(b.x, b.y)){
+    		b.setText(" ");
     	}
-    	else if (grid.isHit(gb.x, gb.y)) {
-    		gb.setText("X");
+    	else if (grid.isHit(b.x, b.y)) {
+    		b.setText("X");
     	}
-    	else if (grid.isMiss(gb.x, gb.y)) {
-    		gb.setText("O");
+    	else if (grid.isMiss(b.x, b.y)) {
+    		b.setText("O");
     	}
 	}
 }
@@ -40,7 +49,6 @@ public class AttackingPanel extends GridPanel{
 	
 	public AttackingPanel (Grid g) {
 		super(g, new Vector2(100,0));
-		AttackingPanelListener listener = new AttackingPanelListener(g);
 		
 		skin = new Skin();
 		// Generate a 1x1 white texture and store it in the skin named "white".
@@ -58,32 +66,10 @@ public class AttackingPanel extends GridPanel{
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
-		makeButtonGrid(skin, listener);
+		makeButtonGrid(skin);
 	}
 	
 	public AttackingPanel (Grid g, Vector2 pos) {
 		super(g, pos);
 	}
-	
-	public void draw (SpriteBatch batch) {
-	    //super.draw(batch);
-		
-	    for(int x = 0; x < grid.getNumCellsX(); x++) {
-			for (int y = 0; y < grid.getNumCellsY(); y++) {
-				if (grid.isHit(x, y)) {
-					//batch.draw(img, x * grid.getCellSize(), y * grid.getCellSize());
-				}
-				else if (grid.isMiss(x, y)) {
-					//batch.draw(img, x * grid.getCellSize(), y * grid.getCellSize());
-				}
-				else if (grid.isAttackable(x, y)) {
-					//batch.draw(img, (x + 0.5) * grid.getCellSize(), (y + 0.5) * grid.getCellSize());
-				}
-			}
-		}
-		
-		
-		
-	}
-	
 }

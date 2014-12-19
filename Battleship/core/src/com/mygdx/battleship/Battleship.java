@@ -75,6 +75,19 @@ public class Battleship extends Game {
 		p1View.debug();
 		p2View.debug();
 		
+		// Disables automatic rendering calls
+		Gdx.graphics.setContinuousRendering(false);
+		Gdx.graphics.requestRendering();
+		
+		// Create listeners
+		AttackingPanelListener p1AttackingListener = new AttackingPanelListener(gamestate.p1Grid, gamestate, p1View.attackPanel);
+		AttackingPanelListener p2AttackingListener = new AttackingPanelListener(gamestate.p2Grid, gamestate, p2View.attackPanel);
+		PlacementPanelListener p1PlacementListener = new PlacementPanelListener(gamestate.p1Grid, gamestate, p1View.placementPanel);
+		PlacementPanelListener p2PlacementListener = new PlacementPanelListener(gamestate.p2Grid, gamestate, p2View.placementPanel);
+		
+		
+		
+		
 //		p1AttackingPanel = new PlacementPanel (gamestate.p1Grid, playerView.getWidth(), playerView.getHeight());
 		//rootTable.add(new PlacementPanel(gamestate.p2Grid));//p1View);
 		//p2AttackingPanel = new PlacementPanel (gamestate.p2Grid);
