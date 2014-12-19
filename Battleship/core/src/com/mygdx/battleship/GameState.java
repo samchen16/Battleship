@@ -18,8 +18,8 @@ public class GameState {
 
 	
 	public GameState (Ship[] s) {
-		p1Grid = new Grid(gridSizeX, gridSizeY, cellSize);
-		p2Grid = new Grid(gridSizeX, gridSizeY, cellSize);
+		p1Grid = new Grid(gridSizeX, gridSizeY, cellSize, s);
+		p2Grid = new Grid(gridSizeX, gridSizeY, cellSize, s.clone());
 		playerTurn = true;
 		shipPlacementPhase = false;
 		
@@ -46,9 +46,9 @@ public class GameState {
 		p2Grid.addShip(s1);
 	}
 	
-	public GameState (int x, int y, int cs) {
-		p1Grid = new Grid(x, y, cs);
-		p2Grid = new Grid(x, y, cs);	
+	public GameState (int x, int y, int cs, Ship[] sL) {
+		p1Grid = new Grid(x, y, cs, sL);
+		p2Grid = new Grid(x, y, cs, sL);	
 	}
 	public Ship getSelectedShip(){
 		return selectedShip;

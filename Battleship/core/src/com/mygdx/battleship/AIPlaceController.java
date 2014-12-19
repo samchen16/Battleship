@@ -84,7 +84,11 @@ public class AIPlaceController extends Actor {
 	}
 	public Ship[] evaluate(Individual indiv){
 		for(int i = 0; i<shipPlacement.length; i++){
+			System.out.println("i = " + i);
+			System.out.println("indiv = "+indiv.get(i));
+			
 			Point p = randPlace(indiv.get(i));
+			System.out.println("p = " + p);
 			boolean b = randOrient(indiv.get(i+1));
 			if(b){
 				shipPlacement[i].changeOrientation();
@@ -94,7 +98,11 @@ public class AIPlaceController extends Actor {
 		return shipPlacement;
 	}
 	public Point randPlace(double prob){
-		int index = (int) Math.round(prob*placeList.size());
+		int index = (int)prob*placeList.size();
+		System.out.println("placelist.size = "+placeList.size());
+		System.out.println("prob*placelist.size "+prob*placeList.size());
+		System.out.println("Math.round(prob*placelist.size "+(Math.round(prob*placeList.size())));
+		System.out.println("index = " + index);
 		return placeList.remove(index);
 	}
 	public boolean randOrient(double prob){

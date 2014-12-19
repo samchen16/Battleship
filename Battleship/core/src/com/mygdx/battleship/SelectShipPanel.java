@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -58,13 +59,24 @@ class ToggleOrientationListener extends ChangeListener {
 class FinishPlacementListener extends ChangeListener {
 	GameState gamestate;
 	SelectShipPanel ssp;
-	
-	public FinishPlacementListener (Grid g, GameState gs, SelectShipPanel ssp) {
+	PlacementPanel pp;
+	public FinishPlacementListener (Grid g, GameState gs, SelectShipPanel s, PlacementPanel p) {
+		gamestate = gs;
+		ssp = s;
 		ssp.finishPlacement.addListener(this);
+		pp = p;
 	}
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
-		
+		boolean reallyDone = true;
+		for(Ship s: gamestate.p1Grid.getShipList()){
+			if(!s.isPlaced()){ reallyDone = false;}
+		}
+		if(reallyDone){
+			ssp.remove();
+			gamestate.playerPlacementDone = true;
+			pp.setPlacement(gamestate.p2Grid);
+		}
 	}
 }
 
