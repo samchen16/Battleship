@@ -13,11 +13,12 @@ public class Grid {
 	private boolean[][] hit;
 	private boolean[][] attackable;
 	private Ship[][] ships;
-	
-	public Grid (int x, int y, int cs) {
+	private Ship[] shipList;
+	public Grid (int x, int y, int cs, Ship[] sL) {
 		cellSize = cs;
 		numCellsX = x;
 		numCellsY = y;
+		shipList = sL;
 		numHits = 0;
 		numMisses = 0;
 		hit = new boolean[x][y];
@@ -31,7 +32,9 @@ public class Grid {
 			}
 		}
 	}
-	
+	public Ship[] getShipList(){
+		return shipList;
+	}
 	public float getCellSize () {
 		return cellSize;
 	}
@@ -110,6 +113,8 @@ public class Grid {
 	 public void removeShip (Ship s) {
 		 for (int x = 0; x < s.getWidth(); x++) {
 			 for (int y = 0; y < s.getHeight(); y++) {
+				 System.out.println("getx = "+s.getX()+" gety "+s.getY());
+				 System.out.println("getx +x = "+(s.getX()+x)+" gety +y="+(s.getY()+y));
 				 ships[s.getX() + x][s.getY() + y] = null;
              }
          }

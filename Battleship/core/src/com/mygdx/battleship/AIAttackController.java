@@ -4,25 +4,7 @@ import java.util.Random;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
-class Point {
-	public int x;
-	public int y;
-	
-	public Point() {
-		x = 0;
-		y = 0;
-	}
-	
-	public Point(int xx, int yy) {
-		x = xx;
-		y = yy;
-	}
-	
-	public boolean equals(Object other) {
-		Point p = (Point) other;
-		return (x == p.x && y == p.y);
-	}
-}
+
 
 public class AIAttackController extends Actor{
 	Grid grid;
@@ -76,7 +58,7 @@ public class AIAttackController extends Actor{
 	
 	public void decideTarget () {
 		foundShip = apl.foundShip;
-		apl.recentHit = apl.recentHit;
+		recentHit = apl.recentHit;
 		
 		// If no ship has been found, pick a random grid cell to attack
 		if (!foundShip) {
@@ -87,22 +69,8 @@ public class AIAttackController extends Actor{
 		
 		// Else target the grid cell with the highest heuristic function value
 		calculateHeuristic();
-		/*double maxHv = Double.NEGATIVE_INFINITY;
-		for (int x = 0; x < hValues.length ; x++) {
-			for (int y = 0; y < hValues[x].length; y++) {
-				if (!attackList.contains(new Point(x,y))) {
-					continue;
-				}
-				
-				if (hValues[x][y] > maxHv) {
-					maxHv = hValues[x][y];
-					target.x = x;
-					target.y = y;
-				}
-			}
-		}*/
+		printHeuristic();
 		double maxHv = Double.MIN_VALUE;
-		
 		
 		for (int x = -1; x < 2; x++) {
 			for (int y = -1; y < 2; y++) {
@@ -113,12 +81,13 @@ public class AIAttackController extends Actor{
 					maxHv = hValues[recentHit.x + x][recentHit.y + y];
 					target.x = recentHit.x + x;
 					target.y = recentHit.y + y;
+					System.out.println(maxHv);
 				}
 			}
 		}
 								
 		targetIndex = attackList.lastIndexOf(target);
-		printHeuristic();
+		
 
 	}
 	
@@ -150,9 +119,8 @@ public class AIAttackController extends Actor{
 	public void calculateHeuristic () {
 		double A = 1.0;
 		double B = 20.0;
-		double C = -3.0;
-		Point range = new Point (1,1);
-		
+		double C = -5.0;
+
 		for (int i = 0; i < hValues.length; i++) {
 			for (int j = 0; j < hValues[i].length; j++) {
 				hValues[i][j] = 0;

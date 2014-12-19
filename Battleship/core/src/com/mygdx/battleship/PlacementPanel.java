@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
@@ -41,9 +42,8 @@ class PlacementPanelListener extends ChangeListener {
 		if(grid.addShip(selected)){
 			for (int i = 0; i < selected.getWidth(); i++) {
 				for (int j = 0; j < selected.getHeight(); j++) {
-					//System.out.println("actors = "+placementpanel.actors);
-					//System.out.println("x = "+(b.x+i)+" y = "+(b.y+j)+" "+placementpanel.actors[b.x-i][b.y-j]);
-					((GridButton) placementpanel.actors[b.x+i][grid.getNumCellsY() -1 -(b.y+j)]).setText("s");
+					GridButton g = ((GridButton) placementpanel.actors[b.x+i][grid.getNumCellsY() -1 -(b.y+j)]);
+					g.setText("s");
 				}
 			}
 			gamestate.selectedShip = null;
@@ -55,6 +55,7 @@ class PlacementPanelListener extends ChangeListener {
 }
 
 public class PlacementPanel extends GridButtonPanel{
+	Grid grid;
 	public PlacementPanel (Grid g) {
 		super(g.getNumCellsX(), g.getNumCellsY(), "~");
 		skin = new Skin();
@@ -74,5 +75,15 @@ public class PlacementPanel extends GridButtonPanel{
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
 		makeButtonGrid(skin);
+	}
+	public void setPlacement(Grid g){
+		grid = g;
+		for(int x = 0; x < grid.getNumCellsX(); x++){
+			for(int y = 0; y < grid.getNumCellsY(); y++){
+				if(grid.hasShip(x, y)){
+					((TextButton) this.actors[x][y]).setText("s");
+				}
+			}
+		}	
 	}
 }
