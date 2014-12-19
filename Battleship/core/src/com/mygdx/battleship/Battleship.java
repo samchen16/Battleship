@@ -1,5 +1,6 @@
 package com.mygdx.battleship;
 
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -23,16 +24,13 @@ public class Battleship extends Game {
 	boolean paused = false;
 	SpriteBatch batch;
 	GameState gamestate;
-	Table rootTable;
-	SplitPane sp;
-	Stage stage;
-	
 	PlayerPanel p1View;
 	PlayerPanel p2View;
-	PlacementPanel p1AttackingPanel;
-	PlacementPanel p2AttackingPanel;
+	SelectShipPanel shipSelect;
 	Label p1Stats;
 	Label p2Stats;
+	Stage stage;
+	Table rootTable;
 	
 	AIAttackController attackAI;
 	
@@ -44,15 +42,20 @@ public class Battleship extends Game {
 		gamestate = new GameState(miltonBradley);
 		rootTable = new Table();
 		rootTable.setFillParent(true);
-		rootTable.debug();
+		//rootTable.debug();
 		p1View = new PlayerPanel(gamestate.p1Grid, gamestate.p2Grid, false);
 		p2View = new PlayerPanel(gamestate.p2Grid, gamestate.p1Grid, true);
+		float w = p1View.attackPanel.actors[0][0].getWidth();
+		float h = p1View.attackPanel.actors[0][0].getHeight();
+		shipSelect = new SelectShipPanel(miltonBradley);
 	
 		rootTable.add(p1View).pad(5).expand().fill();
 		rootTable.add(p2View).pad(5).expand().fill();	
 		p1View.debug();
 		p2View.debug();
-		
+		rootTable.row();
+		rootTable.add(shipSelect).expand().fill();
+		//shipSelect.debug();
 		// Disables automatic rendering calls
 		Gdx.graphics.setContinuousRendering(false);
 		Gdx.graphics.requestRendering();
@@ -63,9 +66,11 @@ public class Battleship extends Game {
 		PlacementPanelListener p1PlacementListener = new PlacementPanelListener(gamestate.p1Grid, gamestate, p1View.placementPanel);
 		PlacementPanelListener p2PlacementListener = new PlacementPanelListener(gamestate.p2Grid, gamestate, p2View.placementPanel);
 		
+		// Create attacking AI and ship placement AI
+		attackAI = new AIAttackController(gamestate.p1Grid);
 		
 		// Create labels to display player scores and stats
-		rootTable.row();
+		//rootTable.row();
 		Skin skin = new Skin();
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);
@@ -76,31 +81,18 @@ public class Battleship extends Game {
 		LabelStyle labelStyle = new LabelStyle (new BitmapFont(), c);
 		p1Stats = new Label(" ", labelStyle);
 		p2Stats = new Label(" ", labelStyle);
-		rootTable.add(p1Stats).expand().fill();
-		rootTable.add(p2Stats).expand().fill();
-		
-		// Create attacking AI and ship placement AI
-		attackAI = new AIAttackController(gamestate.p1Grid);
-		
-		
-//		p1AttackingPanel = new PlacementPanel (gamestate.p1Grid, playerView.getWidth(), playerView.getHeight());
-		//rootTable.add(new PlacementPanel(gamestate.p2Grid));//p1View);
-		//p2AttackingPanel = new PlacementPanel (gamestate.p2Grid);
+		Table t = new Table();
+		t.add(p1Stats).pad(5);//.expand().fill();
+		t.add(p2Stats).pad(5);//.expand().fill();
+		rootTable.add(t);
 		stage.addActor(rootTable);
-		
-		//sp = new SplitPane ((Actor)p1AttackingPanel, (Actor)p2AttackingPanel, true, new Skin());
 	}
-	/*public void resize (int width, int height) {
-		System.out.println("battleship resize "+width +" , "+ height);
-	    stage.getViewport().update(width, height, true);
-	    this.p1View.resize(width/2, height);
-	    this.p2View.resize(width/2, height);
-	}*/
 
 	public void update () {
 		if (gamestate.shipPlacementPhase)  {
 			return;
 		}
+			
 		
 		//Update stat labels
 		p1Stats.setText("Player1 Stats \n" +
@@ -147,27 +139,7 @@ public class Battleship extends Game {
 		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	    //rootTable.debug();
-		//p1View.debug();
-		//p1View.attackPanel.debug();
-		//p1View.placementPanel.debug();
-/*		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act();
-        stage.draw();
-		
-		batch.begin();
-
-		p1AttackingPanel.draw(batch);
-		//sp.draw(batch, 1);
-		batch.end();*/
-		//super.render();
 		stage.act();
 		stage.draw();
-//		rootTable.drawDebug(stage);
 	}
-/*	public void dispose () {
-		p1AttackingPanel.dispose();
-		//p2AttackingPanel.dispose();
-	}*/
 }

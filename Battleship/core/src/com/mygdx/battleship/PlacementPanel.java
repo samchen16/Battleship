@@ -33,7 +33,7 @@ class PlacementPanelListener extends ChangeListener {
 
 public class PlacementPanel extends GridButtonPanel{
 	public PlacementPanel (Grid g) {
-		super(g.getNumCellsX(), g.getNumCellsY());
+		super(g.getNumCellsX(), g.getNumCellsY(), "~");
 		skin = new Skin();
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);

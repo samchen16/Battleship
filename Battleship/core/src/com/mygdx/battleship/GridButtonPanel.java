@@ -36,14 +36,15 @@ public class GridButtonPanel extends Table{
 	private Texture gridTex;
 	public Actor[][] actors;
 	protected Skin skin;
-
-	public GridButtonPanel (int w, int h){
+	public String defaultText;
+	public GridButtonPanel (int w, int h, String s){
 		//int actorWidth = Gdx.graphics.getWidth() / rowActors;
 		//int actorHeight = Gdx.graphics.getHeight() /  columnActors;
 		//grid = g;
 //		position = pos;
 		numCellsX = w;
 		numCellsY = h;
+		defaultText = s;
 		actors = new Actor[numCellsX][numCellsY];	
 		//setFillParent(true);
 		this.debug();
@@ -52,7 +53,7 @@ public class GridButtonPanel extends Table{
 	protected void makeButtonGrid(Skin s){
 		for (int j = 0; j < numCellsY; j++){
 			for (int i = 0; i < numCellsX; i++){
-				  actors[i][j] = new GridButton("~", s, i, numCellsY -1 -j);
+				  actors[i][j] = new GridButton(defaultText, s, i, numCellsY -1 -j);
 				  this.add(actors[i][j]).expand().fill();
 			  }
 			  this.row();
