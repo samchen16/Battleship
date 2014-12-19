@@ -35,8 +35,7 @@ public class Battleship extends Game {
 	GameState gamestate;
 	PlayerPanel p1View;
 	PlayerPanel p2View;
-	PlacementPanel p1AttackingPanel;
-	PlacementPanel p2AttackingPanel;
+	SelectShipPanel shipSelect;
 	Table rootTable;
 	SplitPane sp;
 	Stage stage;
@@ -51,22 +50,27 @@ public class Battleship extends Game {
 		rootTable.debug();
 		p1View = new PlayerPanel(gamestate.p1Grid, gamestate.p2Grid, false);
 		p2View = new PlayerPanel(gamestate.p2Grid, gamestate.p1Grid, true);
+		float w = p1View.attackPanel.actors[0][0].getWidth();
+		float h = p1View.attackPanel.actors[0][0].getHeight();
+		shipSelect = new SelectShipPanel(miltonBradley);
 	
 		rootTable.add(p1View).pad(5).expand().fill();
 		rootTable.add(p2View).pad(5).expand().fill();	
 		p1View.debug();
 		p2View.debug();
-		
+		rootTable.row();
+		rootTable.add(shipSelect).expand().fill();
+		shipSelect.debug();
 		// Disables automatic rendering calls
 		Gdx.graphics.setContinuousRendering(false);
 		Gdx.graphics.requestRendering();
 		
 		// Create listeners
-		AttackingPanelListener p1AttackingListener = new AttackingPanelListener(gamestate.p2Grid, gamestate, p1View.attackPanel);
+/*		AttackingPanelListener p1AttackingListener = new AttackingPanelListener(gamestate.p2Grid, gamestate, p1View.attackPanel);
 		AttackingPanelListener p2AttackingListener = new AttackingPanelListener(gamestate.p1Grid, gamestate, p2View.attackPanel);
 		PlacementPanelListener p1PlacementListener = new PlacementPanelListener(gamestate.p1Grid, gamestate, p1View.placementPanel);
 		PlacementPanelListener p2PlacementListener = new PlacementPanelListener(gamestate.p2Grid, gamestate, p2View.placementPanel);
-		
+	*/	
 //		p1AttackingPanel = new PlacementPanel (gamestate.p1Grid, playerView.getWidth(), playerView.getHeight());
 		//rootTable.add(new PlacementPanel(gamestate.p2Grid));//p1View);
 		//p2AttackingPanel = new PlacementPanel (gamestate.p2Grid);
@@ -106,10 +110,10 @@ public class Battleship extends Game {
 	}
 	@Override
 	public void render () {
-		if (!paused) {
+/*		if (!paused) {
 			update ();
 		}
-		
+*/		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	    //rootTable.debug();
