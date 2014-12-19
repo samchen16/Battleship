@@ -9,11 +9,13 @@ public class Ship {
 	private int topLeftY;
 	private int bottomRightX;
 	private int bottomRightY;
+	public int health;
 	private boolean placed;
 	public Ship(int w, int h){
 		width = w;
 		height = h;
 		placed = false;
+		health = w * h;
 	}
 	public void setLocation(int x, int y){
 		topLeftX = x;
