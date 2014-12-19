@@ -28,7 +28,7 @@ class GridButton extends TextButton {
 	}
 }
 
-public abstract class GridButtonPanel extends Table{
+public class GridButtonPanel extends Table{
 
 	protected int numCellsX;
 	protected int numCellsY;
@@ -37,7 +37,7 @@ public abstract class GridButtonPanel extends Table{
 	public Actor[][] actors;
 	protected Skin skin;
 
-	public GridButtonPanel (int w, int h, Vector2 pos){
+	public GridButtonPanel (int w, int h){
 		//int actorWidth = Gdx.graphics.getWidth() / rowActors;
 		//int actorHeight = Gdx.graphics.getHeight() /  columnActors;
 		//grid = g;
