@@ -10,9 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class SelectShipPanel extends Table {
+	private Ship selectedShip;
 	public SelectShipPanel (Ship[] ships) {
 		Skin skin = new Skin();
 		
@@ -29,22 +31,26 @@ public class SelectShipPanel extends Table {
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", Color.RED);
+		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
+		LabelStyle labelStyle = new LabelStyle (new BitmapFont(), new Color(1.0f,1.0f,1.0f,1.0f));
+		this.add(new Label("Select a ship below, \nthen click any grid square to place.", labelStyle)).pad(5);
+		this.row();
+		Table t = new Table();
 		//setSkin(skin);
 		//this.add(new Label("Select a ship to place", skin));
 		GridButtonPanel[] shipButtons = new GridButtonPanel[ships.length];
 		for(int i = 0; i<shipButtons.length; i++){
-			shipButtons[i] = new GridButtonPanel(ships[i].getWidth(), ships[i].getHeight());
+			shipButtons[i] = new GridButtonPanel(ships[i].getWidth(), ships[i].getHeight(), "=");
 			shipButtons[i].makeButtonGrid(skin);
-			shipButtons[i].pad(2);
-			this.add(shipButtons[i]);//.expand().fill();
-			
-			this.row();
-			shipButtons[i].debug();
+			shipButtons[i].pad(10);
+			t.add(shipButtons[i]);//.expand().fill();
+			//this.row();
+//			shipButtons[i].debug();
 		}
+		this.add(t);
 
 	}
 }
