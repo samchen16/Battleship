@@ -42,55 +42,19 @@ public class Battleship extends Game {
 	Stage stage;
 	@Override
 	public void create () {
-		/*OrthographicCamera camera = new OrthographicCamera();
-		camera.setToOrtho(false, this.WIDTH, this.HEIGHT/2);
-		camera.translate(0, 0);*/
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
-		Skin skin = new Skin();
-		// Generate a 1x1 white texture and store it in the skin named "white".
-		int width = 30;
-		int height = 20;
-		Pixmap pixmap = new Pixmap(width, height, Format.RGBA8888);
-		pixmap.setColor(Color.WHITE);
-		pixmap.fill();
-		for(int i = 0; i<=width; i++){
-		}
-		skin.add("white", new Texture(pixmap));
-		// Store the default libgdx font under the name "default".
-		skin.add("default", new BitmapFont());
-		ImageButtonStyle style = new ImageButtonStyle();
-		style.imageUp = skin.newDrawable("white", Color.DARK_GRAY);
-		style.imageDown = skin.newDrawable("white", Color.BLUE);
-		ImageButton iconButton = new ImageButton(style);
-		//iconButton.setWidth(width);
-		//iconButton.setHeight(height);
-/*		// Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
-		TextButtonStyle textButtonStyle = new TextButtonStyle();
-		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
-		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-		textButtonStyle.font = skin.getFont("default");
-		skin.add("default", textButtonStyle);
-		TextButton nameLabel = new TextButton("", skin);
-*/		
-		//stage.getViewport().setCamera(camera);
-		//batch = new SpriteBatch();
-		gamestate = new GameState();
+		Ship[] miltonBradley = new Ship[]{new Ship(2,1), new Ship(3,1), new Ship(3,1), new Ship(4,1), new Ship(5,1)};
+		gamestate = new GameState(miltonBradley);
 		rootTable = new Table();
 		rootTable.setFillParent(true);
 		rootTable.debug();
-		//rootTable.add(nameLabel).expand();
-		//rootTable.row();
-		//rootTable.add(new TextButton("text2", skin)).expand();
 		p1View = new PlayerPanel(gamestate.p1Grid, gamestate.p2Grid, false);
 		p2View = new PlayerPanel(gamestate.p2Grid, gamestate.p1Grid, true);
-		rootTable.add(iconButton);
-		//rootTable.add(p2View).pad(5).expand().fill();		
-		//rootTable.add(p1View).pad(5).expand().fill();
-		//p1View.debug();
-		//p2View.debug();
+		rootTable.add(p2View).pad(5).expand().fill();		
+		rootTable.add(p1View).pad(5).expand().fill();
+		p1View.debug();
+		p2View.debug();
 		
 		// Disables automatic rendering calls
 		Gdx.graphics.setContinuousRendering(false);
