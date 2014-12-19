@@ -13,13 +13,15 @@ public class GameState {
 	private int gridSizeX = 10;
 	private int gridSizeY = 10;
 	private int cellSize = 25;
-
+	
+	Ship[] shipList;
 	
 	public GameState (Ship[] s) {
 		p1Grid = new Grid(gridSizeX, gridSizeY, cellSize);
 		p2Grid = new Grid(gridSizeX, gridSizeY, cellSize);
 		playerTurn = true;
 		shipPlacementPhase = false;
+		Ship[] shipList = s;
 		
 		// Give players Milton Bradley version's ships
 		//p1Grid.addShip(new Ship(2,1));

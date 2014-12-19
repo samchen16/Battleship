@@ -69,7 +69,7 @@ public class Battleship extends Game {
 		PlacementPanelListener p2PlacementListener = new PlacementPanelListener(gamestate.p2Grid, gamestate, p2View.placementPanel);
 		
 		// Create attacking AI and ship placement AI
-		attackAI = new AIAttackController(gamestate.p1Grid, p2View.attackPanel);
+		attackAI = new AIAttackController(gamestate.p1Grid, p2View.attackPanel, miltonBradley, p2AttackingListener);
 		
 		// Create labels to display player scores and stats
 		//rootTable.row();
@@ -126,6 +126,7 @@ public class Battleship extends Game {
 		
 		// If AI's turn, then let AI attack
 		if (!gamestate.playerTurn) {
+			
 			attackAI.decideTarget();
 			attackAI.attackTarget();
 			Gdx.graphics.requestRendering();
