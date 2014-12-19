@@ -97,7 +97,7 @@ public class Grid {
 		numShips++;
 	}
 	
-	private void removeShip (Ship s) {
+	public void removeShip (Ship s) {
 		for (int x = 0; x < s.getWidth(); x++) {
 			for (int y = 0; y < s.getHeight(); y++) {
 				ships[s.getX() + x][s.getY() + y] = null;
@@ -105,7 +105,6 @@ public class Grid {
 		}
 		numShips--;
 	}
-	
 	private void setHit (int x, int y) {
 		hit[x][y] = true;
 		attackable[x][y] = false;
