@@ -30,9 +30,8 @@ public class PlacementPanel extends GridPanel{
 		skin.add("default", textButtonStyle);
 		makeButtonGrid(skin);
 	}
-	
-	public PlacementPanel (Grid g, Vector2 pos) {
+/*	public PlacementPanel (Grid g, Vector2 pos) {
 		super(g, pos);
 	}
-
+	*/
 }
