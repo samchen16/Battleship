@@ -30,6 +30,7 @@ public class Battleship extends Game {
 	
 	public static final int WIDTH=700,HEIGHT=700;
 	
+	boolean paused = false;
 	SpriteBatch batch;
 	GameState gamestate;
 	PlayerPanel p1View;
@@ -118,8 +119,16 @@ public class Battleship extends Game {
 	    this.p1View.resize(width/2, height);
 	    this.p2View.resize(width/2, height);
 	}*/
+	
+	public void update () {
+		
+	}
 	@Override
 	public void render () {
+		if (!paused) {
+			update ();
+		}
+		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	    //rootTable.debug();
