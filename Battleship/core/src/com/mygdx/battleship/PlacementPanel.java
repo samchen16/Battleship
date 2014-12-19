@@ -18,7 +18,6 @@ class PlacementPanelListener extends ChangeListener {
 	public PlacementPanelListener (Grid g, GameState gs, PlacementPanel pp) {
 		grid = g;
 		gamestate = gs;
-		
 		// Connect to view
 		for (int i = 0; i < pp.actors.length; i++) {
 			for (int j = 0; j < pp.actors [i].length; j++) {
@@ -29,13 +28,12 @@ class PlacementPanelListener extends ChangeListener {
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
 		// TODO Auto-generated method stub
-		
 	}
 }
 
-public class PlacementPanel extends GridPanel{
+public class PlacementPanel extends GridButtonPanel{
 	public PlacementPanel (Grid g) {
-		super(g, new Vector2(0,0));
+		super(g.getNumCellsX(), g.getNumCellsY(), new Vector2(0,0));
 		skin = new Skin();
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
@@ -54,8 +52,4 @@ public class PlacementPanel extends GridPanel{
 		skin.add("default", textButtonStyle);
 		makeButtonGrid(skin);
 	}
-/*	public PlacementPanel (Grid g, Vector2 pos) {
-		super(g, pos);
-	}
-	*/
 }

@@ -66,18 +66,14 @@ public class Battleship extends Game {
 		PlacementPanelListener p1PlacementListener = new PlacementPanelListener(gamestate.p1Grid, gamestate, p1View.placementPanel);
 		PlacementPanelListener p2PlacementListener = new PlacementPanelListener(gamestate.p2Grid, gamestate, p2View.placementPanel);
 		
-		
-		
-		
 //		p1AttackingPanel = new PlacementPanel (gamestate.p1Grid, playerView.getWidth(), playerView.getHeight());
 		//rootTable.add(new PlacementPanel(gamestate.p2Grid));//p1View);
 		//p2AttackingPanel = new PlacementPanel (gamestate.p2Grid);
 		stage.addActor(rootTable);
 		
 		//sp = new SplitPane ((Actor)p1AttackingPanel, (Actor)p2AttackingPanel, true, new Skin());
-
-	}/*
-	public void resize (int width, int height) {
+	}
+	/*public void resize (int width, int height) {
 		System.out.println("battleship resize "+width +" , "+ height);
 	    stage.getViewport().update(width, height, true);
 	    this.p1View.resize(width/2, height);
@@ -102,10 +98,6 @@ public class Battleship extends Game {
 			p1View.attackPanel.setDisabled(true);
 			p2View.attackPanel.setDisabled(false);
 		}
-		
-		
-		
-		
 	}
 	@Override
 	public void render () {
