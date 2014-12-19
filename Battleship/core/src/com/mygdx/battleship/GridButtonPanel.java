@@ -50,9 +50,9 @@ public class GridButtonPanel extends Table{
 	}
 	
 	protected void makeButtonGrid(Skin s){
-		for (int i = 0; i < actors[0].length; i++){
-			  for (int j = 0; j < actors.length; j++){
-				  actors[i][j] = new GridButton("~", s, j, numCellsY -1 -i);
+		for (int j = 0; j < numCellsY; j++){
+			for (int i = 0; i < numCellsX; i++){
+				  actors[i][j] = new GridButton("~", s, i, j);
 				  this.add(actors[i][j]).expand().fill();
 			  }
 			  this.row();
@@ -80,8 +80,8 @@ public class GridButtonPanel extends Table{
 	*/
 	
 	public void setDisabled(boolean b) {
-		for (int i = 0; i < actors.length; i++) {
-			for (int j = 0; j < actors [i].length; j++) {
+		for (int i = 0; i < numCellsX; i++) {
+			for (int j = 0; j < numCellsY; j++) {
 				GridButton gb = (GridButton) actors[i][j];
 				gb.setDisabled(b);
 			}

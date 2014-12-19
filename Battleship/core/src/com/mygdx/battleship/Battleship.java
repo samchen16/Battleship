@@ -35,7 +35,8 @@ public class Battleship extends Game {
 	GameState gamestate;
 	PlayerPanel p1View;
 	PlayerPanel p2View;
-	SelectShipPanel shipSelect;
+	PlacementPanel p1AttackingPanel;
+	PlacementPanel p2AttackingPanel;
 	Table rootTable;
 	SplitPane sp;
 	Stage stage;
@@ -50,20 +51,19 @@ public class Battleship extends Game {
 		rootTable.debug();
 		p1View = new PlayerPanel(gamestate.p1Grid, gamestate.p2Grid, false);
 		p2View = new PlayerPanel(gamestate.p2Grid, gamestate.p1Grid, true);
-		/*rootTable.add(p2View).pad(5).expand().fill();		
+	
 		rootTable.add(p1View).pad(5).expand().fill();
+		rootTable.add(p2View).pad(5).expand().fill();	
 		p1View.debug();
 		p2View.debug();
-		*/
-		shipSelect = new SelectShipPanel(miltonBradley);
-		rootTable.add(shipSelect).expand().fill();
+		
 		// Disables automatic rendering calls
 		Gdx.graphics.setContinuousRendering(false);
 		Gdx.graphics.requestRendering();
 		
 		// Create listeners
-		AttackingPanelListener p1AttackingListener = new AttackingPanelListener(gamestate.p1Grid, gamestate, p1View.attackPanel);
-		AttackingPanelListener p2AttackingListener = new AttackingPanelListener(gamestate.p2Grid, gamestate, p2View.attackPanel);
+		AttackingPanelListener p1AttackingListener = new AttackingPanelListener(gamestate.p2Grid, gamestate, p1View.attackPanel);
+		AttackingPanelListener p2AttackingListener = new AttackingPanelListener(gamestate.p1Grid, gamestate, p2View.attackPanel);
 		PlacementPanelListener p1PlacementListener = new PlacementPanelListener(gamestate.p1Grid, gamestate, p1View.placementPanel);
 		PlacementPanelListener p2PlacementListener = new PlacementPanelListener(gamestate.p2Grid, gamestate, p2View.placementPanel);
 		
@@ -80,14 +80,18 @@ public class Battleship extends Game {
 	    this.p1View.resize(width/2, height);
 	    this.p2View.resize(width/2, height);
 	}*/
-	
+
 	public void update () {
-		// Check for player wins
-		if (gamestate.p1Grid.isEmpty()) {
-			System.out.println("Player 2 wins!");
+		if (gamestate.shipPlacementPhase)  {
+			return;
 		}
-		else if (gamestate.p2Grid.isEmpty()) {
-			System.out.println("Player 1 wins!");
+			
+		// Check for player wins
+		if (gamestate.p1Grid.getNumShips() == 0) {
+			//System.out.println("Player 2 wins!");
+		}
+		else if (gamestate.p2Grid.getNumShips() == 0) {
+			//System.out.println("Player 1 wins!");
 		}
 		
 		// Disable buttons if it is not that player's turn

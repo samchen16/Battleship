@@ -5,6 +5,8 @@ public class GameState {
 	public Grid p1Grid;
 	public Grid p2Grid;
 	public boolean playerTurn;
+
+	public boolean shipPlacementPhase;
 	private Ship[] shipTypes;
 	private int gridSizeX = 10;
 	private int gridSizeY = 10;
@@ -15,6 +17,8 @@ public class GameState {
 		shipTypes = s;
 		p1Grid = new Grid(gridSizeX, gridSizeY, cellSize);
 		p2Grid = new Grid(gridSizeX, gridSizeY, cellSize);
+		playerTurn = true;
+		shipPlacementPhase = false;
 		
 		// Give players Milton Bradley version's ships
 		//p1Grid.addShip(new Ship(2,1));
