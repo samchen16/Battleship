@@ -16,30 +16,25 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 class AttackingPanelListener extends ChangeListener {
-    public void clicked(InputEvent event, float x, float y){
-    	//GridButton gb = (GridButton) event.getTarget();
-    	//System.out.println(gb.x);
-    	//System.out.println(gb.y);
-    	
-    	//Label l = (Label) event.getTarget();
-    	//System.out.println(x);
-    	//System.out.println(y);
-    }
-
-	@Override
+	Grid grid;
+	public AttackingPanelListener (Grid g) {
+		grid = g;
+	}
+	
 	public void changed(ChangeEvent event, Actor actor) {
 		// TODO Auto-generated method stub
 		GridButton gb = (GridButton) actor;
-    	System.out.println(gb.x + " " + gb.y);
+    	
+		
 	}
-	
 }
-
 
 public class AttackingPanel extends GridPanel{
 	
 	public AttackingPanel (Grid g) {
 		super(g, new Vector2(100,0));
+		AttackingPanelListener listener = new AttackingPanelListener(g);
+		
 		skin = new Skin();
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
@@ -56,7 +51,6 @@ public class AttackingPanel extends GridPanel{
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
-		AttackingPanelListener listener = new AttackingPanelListener();
 		makeButtonGrid(skin, listener);
 	}
 	
