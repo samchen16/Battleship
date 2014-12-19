@@ -6,12 +6,30 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+class PlacementPanelListener extends ChangeListener {
+	Grid grid;
+	public PlacementPanelListener (Grid g) {
+		grid = g;
+	}
+	@Override
+	public void changed(ChangeEvent event, Actor actor) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+}
 
 public class PlacementPanel extends GridPanel{
 	public PlacementPanel (Grid g) {
 		super(g, new Vector2(0,0));
+		PlacementPanelListener listener = new PlacementPanelListener(g);
 		skin = new Skin();
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
@@ -28,7 +46,7 @@ public class PlacementPanel extends GridPanel{
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
-		makeButtonGrid(skin);
+		makeButtonGrid(skin, listener);
 	}
 /*	public PlacementPanel (Grid g, Vector2 pos) {
 		super(g, pos);

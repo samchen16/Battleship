@@ -4,9 +4,12 @@ public class GameState {
 
 	public Grid p1Grid;
 	public Grid p2Grid;
+	public boolean playerTurn;
+	
 	private int gridSizeX = 10;
 	private int gridSizeY = 10;
 	private int cellSize = 25;
+	
 	
 	public GameState () {
 		p1Grid = new Grid(gridSizeX, gridSizeY, cellSize);
