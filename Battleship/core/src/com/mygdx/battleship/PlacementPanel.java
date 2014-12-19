@@ -31,8 +31,6 @@ class PlacementPanelListener extends ChangeListener {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 }
 
 public class PlacementPanel extends GridPanel{
