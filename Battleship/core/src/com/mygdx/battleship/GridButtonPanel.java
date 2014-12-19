@@ -28,32 +28,34 @@ class GridButton extends TextButton {
 	}
 }
 
-public abstract class GridPanel extends Table{
+public abstract class GridButtonPanel extends Table{
 
-	protected Grid grid;
+	protected int numCellsX;
+	protected int numCellsY;
 //	protected Vector2 position;
 	private Texture gridTex;
 	public Actor[][] actors;
 	protected Skin skin;
-	public GridPanel (Grid g, Vector2 pos){
+
+	public GridButtonPanel (int w, int h, Vector2 pos){
 		//int actorWidth = Gdx.graphics.getWidth() / rowActors;
 		//int actorHeight = Gdx.graphics.getHeight() /  columnActors;
-		grid = g;
+		//grid = g;
 //		position = pos;
-		actors = new Actor[g.getNumCellsX()][g.getNumCellsY()];	
+		numCellsX = w;
+		numCellsY = h;
+		actors = new Actor[numCellsX][numCellsY];	
 		//setFillParent(true);
+		this.debug();
 	}
 	
 	protected void makeButtonGrid(Skin s){
-		for (int i = 0; i < actors[0].length; i++){
-			  for (int j = 0; j < actors.length; j++){
-				  actors[i][j] = new GridButton("T", s, j, grid.getNumCellsY() -1 -i);
-				  this.add(actors[i][j]).expand();//.width(grid.getCellSize()).height(grid.getCellSize());
-//				  this.add(actors[i][j]).width(this.getMaxWidth()/actors[0].length).height(this.getMaxHeight()/actors.length);
-					//System.out.println("actor["+i+"]["+j+"]= "+actors[i][j].getWidth() +" , "+ +actors[i][j].getHeight());
-					//System.out.println("actor["+i+"]["+j+"] at "+actors[i][j].getX() +" , "+ +actors[i][j].getY());
+		for (int j = 0; j < numCellsY; j++){
+			for (int i = 0; i < numCellsX; i++){
+				  actors[i][j] = new GridButton("~", s, i, j);
+				  this.add(actors[i][j]).expand().fill();
 			  }
-			   this.row();
+			  this.row();
 		}
 	}/*
 	public void resize(int width, int height) {
@@ -78,8 +80,8 @@ public abstract class GridPanel extends Table{
 	*/
 	
 	public void setDisabled(boolean b) {
-		for (int i = 0; i < actors.length; i++) {
-			for (int j = 0; j < actors [i].length; j++) {
+		for (int i = 0; i < numCellsX; i++) {
+			for (int j = 0; j < numCellsY; j++) {
 				GridButton gb = (GridButton) actors[i][j];
 				gb.setDisabled(b);
 			}

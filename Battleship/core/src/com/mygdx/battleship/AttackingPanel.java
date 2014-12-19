@@ -54,10 +54,10 @@ class AttackingPanelListener extends ChangeListener {
 	}
 }
 
-public class AttackingPanel extends GridPanel{
+public class AttackingPanel extends GridButtonPanel{
 	
 	public AttackingPanel (Grid g) {
-		super(g, new Vector2(100,0));
+		super(g.getNumCellsX(), g.getNumCellsY(), new Vector2(100,0));
 		skin = new Skin();
 		
 		// Generate a 1x1 white texture and store it in the skin named "white".
