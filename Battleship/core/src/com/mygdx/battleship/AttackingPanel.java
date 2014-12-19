@@ -34,7 +34,10 @@ class AttackingPanelListener extends ChangeListener {
 	
 	public void changed(ChangeEvent event, Actor actor) {
 		GridButton b = (GridButton) actor;
-    	Ship s = grid.attack(b.x, b.y);
+    	if (!grid.isAttackable(b.x, b.y)) {
+    		return;
+    	}
+		Ship s = grid.attack(b.x, b.y);
     	
     	// Change view depending on whether attack hit or missed
     	if (grid.isHit(b.x, b.y)) {
