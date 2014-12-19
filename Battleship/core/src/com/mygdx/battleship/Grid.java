@@ -134,14 +134,14 @@ public class Grid {
 	}
 	
 	// Returns ship that got attacked or null if none
-	public void attack (int x, int y) {
+	public Ship attack (int x, int y) {
 		if (!isAttackable(x,y)) {
-			return;
+			return null;
 		}
-		
+		Ship s = null;
 		if (hasShip(x,y)) {
 			setHit(x,y);
-			Ship s = ships[x][y];
+			s = ships[x][y];
 			ships[x][y] = null;
 			s.health--;
 			if (s.health == 0) {
@@ -152,6 +152,7 @@ public class Grid {
 		else {
 			setMiss(x,y);
 		}
+		return s;
 	}
 	
 }
