@@ -142,7 +142,6 @@ public class Battleship extends Game {
 		
 		
 		
-		
 	}
 	
 	@Override
