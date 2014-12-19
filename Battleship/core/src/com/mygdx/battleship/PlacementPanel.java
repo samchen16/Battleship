@@ -6,8 +6,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+class PlacementPanelListener extends ChangeListener {
+
+	@Override
+	public void changed(ChangeEvent event, Actor actor) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+}
 
 public class PlacementPanel extends GridPanel{
 	public PlacementPanel (Grid g) {
@@ -28,7 +42,8 @@ public class PlacementPanel extends GridPanel{
 		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
-		makeButtonGrid(skin);
+		PlacementPanelListener listener = new PlacementPanelListener();
+		makeButtonGrid(skin, listener);
 	}
 	
 	public PlacementPanel (Grid g, Vector2 pos) {

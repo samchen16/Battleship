@@ -13,6 +13,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+class GridButton extends TextButton {
+	// indices of button in grid
+	public int x;
+	public int y;
+	
+	public GridButton(String text, Skin skin, int i, int j) {
+		super(text, skin);
+		x = i;
+		y = j;
+	}
+}
 
 public abstract class GridPanel extends Table{
 
@@ -29,11 +43,14 @@ public abstract class GridPanel extends Table{
 		actors = new Actor[g.getNumCellsX()][g.getNumCellsY()];		
 	}
 	
-	protected void makeButtonGrid(Skin s){
+	protected void makeButtonGrid(Skin s, ChangeListener cl){
 		for (int i = 0; i < actors[0].length; i++){
 			  for (int j = 0; j < actors.length; j++){
-				  actors[i][j] = new TextButton(" ", s);
+				  GridButton gb =  new GridButton(" ", s, i, j);
+				  actors[i][j] = new GridButton(" ", s, i, j);
 				  this.add(actors[i][j]).width(grid.getCellSize()).height(grid.getCellSize());
+				  actors[i][j].addListener(cl);
+				  
 			   }
 			   this.row();
 		}
