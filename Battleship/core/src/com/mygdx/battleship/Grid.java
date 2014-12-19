@@ -56,15 +56,15 @@ public class Grid {
 		return numMisses;
 	}
 	
-	public boolean getHit (int x, int y) {
+	public boolean isHit (int x, int y) {
 		return hit[x][y];
 	}
 	
-	public boolean getMiss (int x, int y) {
+	public boolean isMiss (int x, int y) {
 		return !hit[x][y] && !attackable[x][y];
 	}
 
-	public boolean getAttackable (int x, int y) {
+	public boolean isAttackable (int x, int y) {
 		return attackable[x][y];
 	}
 	
@@ -109,7 +109,7 @@ public class Grid {
 	
 	// Returns ship that got attacked or null if none
 	public Ship attack (int x, int y) {
-		if (!getAttackable(x,y)) {
+		if (!isAttackable(x,y)) {
 			return null;
 		}
 		

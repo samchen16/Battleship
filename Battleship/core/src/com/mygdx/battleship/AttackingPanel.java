@@ -22,10 +22,17 @@ class AttackingPanelListener extends ChangeListener {
 	}
 	
 	public void changed(ChangeEvent event, Actor actor) {
-		// TODO Auto-generated method stub
 		GridButton gb = (GridButton) actor;
-    	
-		
+    	grid.attack(gb.x, gb.y);
+    	if (grid.isAttackable(gb.x, gb.y)){
+    		gb.setText(" ");
+    	}
+    	else if (grid.isHit(gb.x, gb.y)) {
+    		gb.setText("X");
+    	}
+    	else if (grid.isMiss(gb.x, gb.y)) {
+    		gb.setText("O");
+    	}
 	}
 }
 
@@ -63,13 +70,13 @@ public class AttackingPanel extends GridPanel{
 		
 	    for(int x = 0; x < grid.getNumCellsX(); x++) {
 			for (int y = 0; y < grid.getNumCellsY(); y++) {
-				if (grid.getHit(x, y)) {
+				if (grid.isHit(x, y)) {
 					//batch.draw(img, x * grid.getCellSize(), y * grid.getCellSize());
 				}
-				else if (grid.getMiss(x, y)) {
+				else if (grid.isMiss(x, y)) {
 					//batch.draw(img, x * grid.getCellSize(), y * grid.getCellSize());
 				}
-				else if (grid.getAttackable(x, y)) {
+				else if (grid.isAttackable(x, y)) {
 					//batch.draw(img, (x + 0.5) * grid.getCellSize(), (y + 0.5) * grid.getCellSize());
 				}
 			}
