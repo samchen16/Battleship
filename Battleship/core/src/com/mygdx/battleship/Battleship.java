@@ -32,7 +32,7 @@ public class Battleship extends Game {
 	Stage stage;
 	Table rootTable;
 	
-	AIAttackController attackAI;
+	//AIAttackController attackAI;
 	
 	@Override
 	public void create () {
@@ -63,11 +63,13 @@ public class Battleship extends Game {
 		// Create listeners
 		AttackingPanelListener p1AttackingListener = new AttackingPanelListener(gamestate.p2Grid, gamestate, p1View.attackPanel);
 		AttackingPanelListener p2AttackingListener = new AttackingPanelListener(gamestate.p1Grid, gamestate, p2View.attackPanel);
+		SelectShipPanelListener p1SelectShipListener = new SelectShipPanelListener (gamestate.p1Grid, gamestate, shipSelect);
+		SelectShipPanelListener p2SelectShipListener = new SelectShipPanelListener (gamestate.p2Grid, gamestate, shipSelect);
 		PlacementPanelListener p1PlacementListener = new PlacementPanelListener(gamestate.p1Grid, gamestate, p1View.placementPanel);
 		PlacementPanelListener p2PlacementListener = new PlacementPanelListener(gamestate.p2Grid, gamestate, p2View.placementPanel);
 		
 		// Create attacking AI and ship placement AI
-		attackAI = new AIAttackController(gamestate.p1Grid);
+		//attackAI = new AIAttackController(gamestate.p1Grid);
 		
 		// Create labels to display player scores and stats
 		//rootTable.row();
@@ -124,8 +126,8 @@ public class Battleship extends Game {
 		
 		// If AI's turn, then let AI attack
 		if (!gamestate.playerTurn) {
-			attackAI.decideMove();
-			attackAI.makeMove();
+			//attackAI.decideMove();
+			//attackAI.makeMove();
 			gamestate.playerTurn = !gamestate.playerTurn;
 			Gdx.graphics.requestRendering();
 		}
