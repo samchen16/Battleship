@@ -41,9 +41,8 @@ class PlacementPanelListener extends ChangeListener {
 		if(grid.addShip(selected)){
 			for (int i = 0; i < selected.getWidth(); i++) {
 				for (int j = 0; j < selected.getHeight(); j++) {
-					System.out.println("actors = "+placementpanel.actors);
-					System.out.println("x = "+(b.x+i)+" y = "+(b.y+j)+" "+placementpanel.actors[b.x-i][b.y-j]);
-					((GridButton) placementpanel.actors[b.x+i][grid.getNumCellsY() -1 -(b.y+j)]).setText("s");
+					GridButton g = ((GridButton) placementpanel.actors[b.x+i][grid.getNumCellsY() -1 -(b.y+j)]);
+					g.setText("s");
 				}
 			}
 			gamestate.selectedShip = null;
