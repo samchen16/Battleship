@@ -78,6 +78,12 @@ public class Grid {
 	}
 	
 	public boolean canPlaceShip (Ship s) {
+		int maxX = s.getX() + s.getWidth() - 1;
+		int maxY = s.getY() + s.getHeight() -1;
+		if (!(maxX < numCellsX && maxY < numCellsY)) {
+			return false;
+		}
+		
 		boolean canPlace = true;
 		for (int x = 0; x < s.getWidth(); x++) {
 			for (int y = 0; y < s.getHeight(); y++) {

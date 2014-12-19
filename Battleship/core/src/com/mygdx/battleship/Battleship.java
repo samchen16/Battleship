@@ -128,7 +128,6 @@ public class Battleship extends Game {
 		if (!gamestate.playerTurn) {
 			attackAI.decideTarget();
 			attackAI.attackTarget();
-			gamestate.playerTurn = !gamestate.playerTurn;
 			Gdx.graphics.requestRendering();
 		}
 		

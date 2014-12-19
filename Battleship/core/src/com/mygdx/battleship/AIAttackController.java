@@ -83,13 +83,13 @@ public class AIAttackController extends Actor{
 	}
 	
 	public void attackTarget () {
+		// Send events to click button corresponding to the grid cell the AI wants to attack
 		InputEvent e = new InputEvent();
 		e.setType(InputEvent.Type.touchDown);
 		InputEvent e2 = new InputEvent();
 		e2.setType(InputEvent.Type.touchUp);
 		attackingPanel.actors[target.x][target.y].fire(e);
 		attackingPanel.actors[target.x][target.y].fire(e2);
-		
 		
 		attackList.remove(targetIndex);
 		System.out.println("AI attacks (" + target.x + " " + target.y + ")");
