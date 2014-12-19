@@ -6,18 +6,45 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+class SelectShipPanelListener extends ChangeListener {
+	Grid grid;
+	GameState gamestate;
+	public SelectShipPanelListener (Grid g, GameState gs, SelectShipPanel ssp) {
+		grid = g;
+		gamestate = gs;
+		// Connect to view
+		for (int i = 0; i < ssp.shipButtons.length; i++) {
+			ssp.shipButtons[i].addListener(this);
+		}
+	}
+	@Override
+	public void changed(ChangeEvent event, Actor actor) {
+		GridButton b = (GridButton) actor;
+    	if (grid.hasShip(b.x, b.y)) {
+    		return;
+    	}
+		Ship selected = gamestate.getSelectedShip();
+		if(selected.isPlaced()&&!(selected.getX()==b.x&&selected.getY()==b.y)){ //if already placed but trying to place elsewhere
+			
+		}
+    	
+	}
+}
 
 public class SelectShipPanel extends Table {
 	private Ship selectedShip;
+	public GridButtonPanel[] shipButtons;
 	public SelectShipPanel (Ship[] ships) {
 		Skin skin = new Skin();
-		
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);

@@ -4,6 +4,9 @@ public class GameState {
 
 	public Grid p1Grid;
 	public Grid p2Grid;
+	public Ship[] p1Ships;
+	public Ship[] p2Ships;
+	public Ship selectedShip;
 	public boolean playerTurn;
 
 	public boolean shipPlacementPhase;
@@ -11,7 +14,7 @@ public class GameState {
 	private int gridSizeX = 10;
 	private int gridSizeY = 10;
 	private int cellSize = 25;
-	
+
 	
 	public GameState (Ship[] s) {
 		shipTypes = s;
@@ -47,6 +50,8 @@ public class GameState {
 		p1Grid = new Grid(x, y, cs);
 		p2Grid = new Grid(x, y, cs);	
 	}
-	
+	public Ship getSelectedShip(){
+		return selectedShip;
+	}
 	
 }

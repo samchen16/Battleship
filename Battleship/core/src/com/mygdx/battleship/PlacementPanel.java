@@ -25,7 +25,17 @@ class PlacementPanelListener extends ChangeListener {
 	}
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
-		// TODO Auto-generated method stub
+		GridButton b = (GridButton) actor;
+    	if (grid.hasShip(b.x, b.y)||gamestate.selectedShip == null) {
+    		return;
+    	}
+		Ship selected = gamestate.getSelectedShip();
+		if(selected.isPlaced()){
+			grid.removeShip(selected);
+		}
+/*		if(selected.setLocation(b.x, b.y)){
+			gamestate.selectedShip = null;
+		}*/
 	}
 }
 
