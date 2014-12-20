@@ -113,12 +113,13 @@ public class Grid {
 	 public void removeShip (Ship s) {
 		 for (int x = 0; x < s.getWidth(); x++) {
 			 for (int y = 0; y < s.getHeight(); y++) {
-				 System.out.println("getx = "+s.getX()+" gety "+s.getY());
-				 System.out.println("getx +x = "+(s.getX()+x)+" gety +y="+(s.getY()+y));
+				 /*System.out.println("getx = "+s.getX()+" gety "+s.getY());
+				 System.out.println("getx +x = "+(s.getX()+x)+" gety +y="+(s.getY()+y));*/
 				 ships[s.getX() + x][s.getY() + y] = null;
              }
          }
          numShips--;
+         s.setLocation(-1, -1);
 	 }
 	
 	private void setHit (int x, int y) {

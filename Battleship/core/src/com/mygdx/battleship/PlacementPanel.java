@@ -35,6 +35,7 @@ class PlacementPanelListener extends ChangeListener {
 		Ship selected = gamestate.getSelectedShip();
 		if(selected.isPlaced()){
 			grid.removeShip(selected);
+			
 		}
 		int x = selected.getX();
 		int y = selected.getY();

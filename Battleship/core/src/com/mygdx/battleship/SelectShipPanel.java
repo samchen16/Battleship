@@ -35,9 +35,9 @@ class SelectShipPanelListener extends ChangeListener {
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
 		GridButton b = (GridButton) actor;
-		System.out.println(selectshippanel);
+/*		System.out.println(selectshippanel);
 		System.out.println(selectshippanel.gbpToShip);
-		System.out.println(selectshippanel.gbpToShip.get(b));
+		System.out.println(selectshippanel.gbpToShip.get(b));*/
 		gamestate.selectedShip = selectshippanel.gbpToShip.get(b);
 	}
 }
@@ -76,10 +76,16 @@ class FinishPlacementListener extends ChangeListener {
 			if(!s.isPlaced()){ reallyDone = false;}
 		}
 		if(reallyDone){
-			ssp.remove();
-			gamestate.playerPlacementDone = true;
+			ssp.removeActor(ssp.toggleOrientation);
+			ssp.removeActor(ssp.finishPlacement);
+			ssp.instructions.setText("Click anywhere on top left grid to attack");
+			for(GridButtonPanel x: ssp.shipButtons){
+				x.setDisabled(true);
+			}
+			//ssp.remove();
 			gamestate.selectedShip = null;
 			pp.setPlacement(gamestate.p2Grid);
+			gamestate.shipPlacementPhase = false;
 		}
 	}
 }
@@ -90,6 +96,7 @@ public class SelectShipPanel extends Table {
 	public TextButton toggleOrientation;
 	public TextButton finishPlacement;
 	public Ship[] ships;
+	public Label instructions;
 	public SelectShipPanel (Ship[] s) {
 		ships = s;
 		gbpToShip = new HashMap<GridButton, Ship>();
@@ -112,7 +119,8 @@ public class SelectShipPanel extends Table {
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
 		LabelStyle labelStyle = new LabelStyle (new BitmapFont(), new Color(1.0f,1.0f,1.0f,1.0f));
-		this.add(new Label("Select a ship below, \nthen click any grid square to place.", labelStyle)).pad(5);
+		instructions = new Label("Select a ship below, \nthen click square on bottom left grid to place.", labelStyle);
+		this.add(instructions).pad(5);
 		this.row();
 		toggleOrientation = new TextButton("Flip Selected", skin);
 		this.add(toggleOrientation).pad(5);

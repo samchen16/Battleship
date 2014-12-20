@@ -16,6 +16,7 @@ public class Ship {
 		height = h;
 		setLocation(-1, -1);
 		health = w * h;
+		placed = false;
 	}
 	public void setLocation(int x, int y){
 		if(x == -1 || y == -1){
@@ -52,5 +53,13 @@ public class Ship {
 	}
 	public int getHeight(){
 		return height;
+	}
+	public String toString(){
+		return "Ship:{" +
+		"\n		bottomLeft: ("+bottomLeftX+","+bottomLeftY+")"+
+		"\n		bottomLeft: ("+topRightX+","+topRightY+")"+
+		"\n		dimensions: ("+width+","+height+")"+
+		"\n		placed: "+placed+
+		"\n		health: "+health;
 	}
 }

@@ -41,7 +41,9 @@ public class Battleship extends Game {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		Ship[] miltonBradley = new Ship[]{new Ship(2,1), new Ship(3,1), new Ship(3,1), new Ship(4,1), new Ship(5,1)};
-		gamestate = new GameState(miltonBradley);
+		Ship[] p1Ships = new Ship[]{new Ship(2,1), new Ship(3,1), new Ship(3,1), new Ship(4,1), new Ship(5,1)};
+		Ship[] p2Ships = new Ship[]{new Ship(2,1), new Ship(3,1), new Ship(3,1), new Ship(4,1), new Ship(5,1)};
+		gamestate = new GameState(p1Ships, p2Ships);
 		rootTable = new Table();
 		rootTable.setFillParent(true);
 		//rootTable.debug();
@@ -49,7 +51,7 @@ public class Battleship extends Game {
 		p2View = new PlayerPanel(gamestate.p2Grid, gamestate.p1Grid, true);
 		float w = p1View.attackPanel.actors[0][0].getWidth();
 		float h = p1View.attackPanel.actors[0][0].getHeight();
-		shipSelect = new SelectShipPanel(miltonBradley);
+		shipSelect = new SelectShipPanel(p1Ships);
 	
 		rootTable.add(p1View).pad(5).expand().fill();
 		rootTable.add(p2View).pad(5).expand().fill();	
@@ -67,11 +69,12 @@ public class Battleship extends Game {
 		AttackingPanelListener p2AttackingListener = new AttackingPanelListener(gamestate.p1Grid, gamestate, p2View.attackPanel);
 		SelectShipPanelListener p1SelectShipListener = new SelectShipPanelListener (gamestate.p1Grid, gamestate, shipSelect);
 		FinishPlacementListener finishPlacementListener = new FinishPlacementListener(gamestate.p1Grid, gamestate, shipSelect, p2View.placementPanel); 
+		ToggleOrientationListener toggleOrientationListener = new ToggleOrientationListener(gamestate.p1Grid, gamestate, shipSelect);
 		//SelectShipPanelListener p2SelectShipListener = new SelectShipPanelListener (gamestate.p2Grid, gamestate, shipSelect);
 		PlacementPanelListener p1PlacementListener = new PlacementPanelListener(gamestate.p1Grid, gamestate, p1View.placementPanel);
 		PlacementPanelListener p2PlacementListener = new PlacementPanelListener(gamestate.p2Grid, gamestate, p2View.placementPanel);
 		try {
-			placeAI = new AIPlaceController(gamestate.p2Grid, miltonBradley, p2View.placementPanel);
+			placeAI = new AIPlaceController(gamestate.p2Grid, p2Ships, p2View.placementPanel);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -99,7 +102,7 @@ public class Battleship extends Game {
 	}
 
 	public void update () {
-		if (gamestate.shipPlacementPhase)  {
+		if (gamestate.shipPlacementPhase||gamestate.gameFinish)  {
 			return;
 		}
 			
@@ -115,13 +118,24 @@ public class Battleship extends Game {
 						"Ships Remaining: " + gamestate.p2Grid.getNumShips());
 		
 		// Check for player wins
-		if (gamestate.p1Grid.getNumShips() == 0) {
-			//System.out.println("Player 2 wins!");
+		if(gamestate.p1Grid.getNumShips() == 0 || gamestate.p2Grid.getNumShips() == 0){
+			gamestate.gameFinish = true;
+			placeAI.setCurrentPlacementFitness(gamestate.p2Grid.getNumHits());
+			if (gamestate.p1Grid.getNumShips() == 0) {
+				p2Stats.setText("Player2 Stats \n" +
+						"Hits: " + gamestate.p1Grid.getNumHits() + "\n" +
+						"Misses: " + gamestate.p1Grid.getNumMisses() + "\n" +
+						"Ships Remaining: " + gamestate.p2Grid.getNumShips() + "\n"+
+						"Player 2 wins!");
+			}
+			else{
+				p1Stats.setText("Player1 Stats \n" +
+						"Hits: " + gamestate.p2Grid.getNumHits() + "\n" +
+						"Misses: " + gamestate.p2Grid.getNumMisses() + "\n" +
+						"Ships Remaining: " + gamestate.p1Grid.getNumShips() + "\n"+
+						"Player 1 wins!");
+			}
 		}
-		else if (gamestate.p2Grid.getNumShips() == 0) {
-			//System.out.println("Player 1 wins!");
-		}
-		
 		// Disable buttons if it is not that player's turn
 		if (gamestate.playerTurn) {
 			p2View.attackPanel.setDisabled(true);

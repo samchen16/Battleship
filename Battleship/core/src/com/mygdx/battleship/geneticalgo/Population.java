@@ -30,6 +30,9 @@ public class Population implements java.io.Serializable{
 	public void setIndividual(int i, Individual indiv){
 		individuals[i] = indiv;
 	}
+	public void setIndividualFitness(int i, int fitness){
+		individuals[i].setFitness(fitness);
+	}
     public Individual getFittest() {
         Individual fittest = individuals[0];
         // Loop through individuals to find fittest
