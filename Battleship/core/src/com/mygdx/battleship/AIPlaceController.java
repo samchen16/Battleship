@@ -71,8 +71,18 @@ public class AIPlaceController extends Actor {
     			  break;
     		  }
     	  }
+    	  rebuildPlaceList();
     	  currentPopIndex++;
       }
+	}
+	public void rebuildPlaceList(){
+		ArrayList<Point> a = new ArrayList<Point>();
+		for (int x = 0; x < grid.getNumCellsX(); x++) {
+			for (int y = 0; y < grid.getNumCellsY(); y++) {
+				a.add(new Point(x,y));
+			}
+		}
+		placeList = a;
 	}
 	public void writeOutput(int i, Population p) throws IOException{
 			FileOutputStream fos = new FileOutputStream("population.tmp");

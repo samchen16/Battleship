@@ -70,12 +70,12 @@ public class Battleship extends Game {
 		//SelectShipPanelListener p2SelectShipListener = new SelectShipPanelListener (gamestate.p2Grid, gamestate, shipSelect);
 		PlacementPanelListener p1PlacementListener = new PlacementPanelListener(gamestate.p1Grid, gamestate, p1View.placementPanel);
 		PlacementPanelListener p2PlacementListener = new PlacementPanelListener(gamestate.p2Grid, gamestate, p2View.placementPanel);
-		/*try {
+		try {
 			placeAI = new AIPlaceController(gamestate.p2Grid, miltonBradley, p2View.placementPanel);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		// Create attacking AI and ship placement AI
 		attackAI = new AIAttackController(gamestate.p1Grid, p2View.attackPanel, miltonBradley, p2AttackingListener);
 		

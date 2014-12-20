@@ -43,7 +43,10 @@ class SelectShipPanelListener extends ChangeListener {
 }
 class ToggleOrientationListener extends ChangeListener {
 	GameState gamestate;
+	Grid grid;
 	public ToggleOrientationListener (Grid g, GameState gs, SelectShipPanel ssp) {
+		grid = g;
+		gamestate = gs;
 		ssp.toggleOrientation.addListener(this);
 	}
 	@Override
@@ -75,6 +78,7 @@ class FinishPlacementListener extends ChangeListener {
 		if(reallyDone){
 			ssp.remove();
 			gamestate.playerPlacementDone = true;
+			gamestate.selectedShip = null;
 			pp.setPlacement(gamestate.p2Grid);
 		}
 	}

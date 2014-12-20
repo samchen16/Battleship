@@ -3,9 +3,10 @@ package com.mygdx.battleship.geneticalgo;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.badlogic.gdx.utils.Json.Serializable;
 import com.mygdx.battleship.Point;
 
-public class Population {
+public class Population implements java.io.Serializable{
 	public Individual[] individuals;
 	public int individualSize;
 	//PriorityQueue

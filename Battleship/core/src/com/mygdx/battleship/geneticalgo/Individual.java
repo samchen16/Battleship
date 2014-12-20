@@ -1,6 +1,8 @@
 package com.mygdx.battleship.geneticalgo;
 
-public class Individual{
+import java.io.Serializable;
+
+public class Individual implements Serializable{
 	double[] genes;
 	int fitness = Integer.MAX_VALUE;
 	/* GA parameters */

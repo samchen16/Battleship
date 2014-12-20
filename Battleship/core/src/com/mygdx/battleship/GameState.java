@@ -24,7 +24,7 @@ public class GameState {
 		playerTurn = true;
 		shipPlacementPhase = false;
 		Ship[] shipList = s;
-		
+		/*
 		// Give players Milton Bradley version's ships
 		//p1Grid.addShip(new Ship(2,1));
 		//p1Grid.addShip(new Ship(3,1));
@@ -64,7 +64,7 @@ public class GameState {
 		p2Grid.addShip(s1);
 		s1 = new Ship(4,1);
 		s1.setLocation(6, 9);
-		p2Grid.addShip(s1);
+		p2Grid.addShip(s1);*/
 	}
 	
 	public GameState (int x, int y, int cs, Ship[] sL) {
