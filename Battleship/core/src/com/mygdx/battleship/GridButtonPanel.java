@@ -32,21 +32,15 @@ public class GridButtonPanel extends Table{
 
 	protected int numCellsX;
 	protected int numCellsY;
-//	protected Vector2 position;
 	private Texture gridTex;
 	public Actor[][] actors;
 	protected Skin skin;
 	public String defaultText;
 	public GridButtonPanel (int w, int h, String s){
-		//int actorWidth = Gdx.graphics.getWidth() / rowActors;
-		//int actorHeight = Gdx.graphics.getHeight() /  columnActors;
-		//grid = g;
-//		position = pos;
 		numCellsX = w;
 		numCellsY = h;
 		defaultText = s;
 		actors = new Actor[numCellsX][numCellsY];	
-		//setFillParent(true);
 		this.debug();
 	}
 	
@@ -58,28 +52,7 @@ public class GridButtonPanel extends Table{
 			  }
 			  this.row();
 		}
-	}/*
-	public void resize(int width, int height) {
-		System.out.println("gridpanel resize "+width +" , "+ height);
-		for (int i = 0; i < actors[0].length; i++){
-			  for (int j = 0; j < actors.length; j++){
-				  if(actors[i][j]!=null){
-					  actors[i][j].setSize(width/grid.getNumCellsX(), height/grid.getNumCellsY());
-						System.out.println("actor["+i+"]["+j+"]= "+actors[i][j].getWidth() +" , "+ +actors[i][j].getHeight());
-						System.out.println("actor["+i+"]["+j+"] at "+actors[i][j].getX() +" , "+ +actors[i][j].getY());
-				  }
-			   }
-		}
-	}
-	public void draw (SpriteBatch batch) {
-		batch.draw(gridTex, position.x, position.y);
-	}
-	
-	public void dispose() {
-		gridTex.dispose();
-	}
-	*/
-	
+	}	
 	public void setDisabled(boolean b) {
 		for (int i = 0; i < numCellsX; i++) {
 			for (int j = 0; j < numCellsY; j++) {

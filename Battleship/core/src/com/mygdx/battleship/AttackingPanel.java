@@ -48,13 +48,11 @@ class AttackingPanelListener extends ChangeListener {
     		foundShip = true;
     		recentHit.x = b.x;
     		recentHit.y = b.y;
-    		//System.out.println("hit " + b.x + " " + b.y);
     	}
     	else if (grid.isMiss(b.x, b.y)) {
     		b.setText("O");
 
     		foundShip = false;
-    		//System.out.println("miss " + b.x + " " + b.y);
     	}
     	b.setDisabled(true);
     	if (s != null && s.health == 0) {
@@ -62,7 +60,6 @@ class AttackingPanelListener extends ChangeListener {
     	}
     	// Switches turns
     	gamestate.playerTurn = !gamestate.playerTurn;
-    	//System.out.println(gamestate.playerTurn);
 	}
 }
 

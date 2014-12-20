@@ -129,7 +129,6 @@ public class AIAttackController extends Actor{
 			for (int i = 0; i < hValues.length; i ++) {
 				s = s + " " + hValues[i][j];
 			}
-			//System.out.println(s);
 		}
 	}
 	
@@ -143,7 +142,6 @@ public class AIAttackController extends Actor{
 		attackingPanel.actors[target.x][grid.getNumCellsX() -1 -target.y].fire(e2);
 		
 		attackList.remove(target);
-		//System.out.println("AI attacks (" + target.x + " " + target.y + ")");
 	}
 	
 	public void calculateHeuristic () {

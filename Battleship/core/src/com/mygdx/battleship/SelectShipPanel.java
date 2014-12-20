@@ -35,9 +35,6 @@ class SelectShipPanelListener extends ChangeListener {
 	@Override
 	public void changed(ChangeEvent event, Actor actor) {
 		GridButton b = (GridButton) actor;
-/*		System.out.println(selectshippanel);
-		System.out.println(selectshippanel.gbpToShip);
-		System.out.println(selectshippanel.gbpToShip.get(b));*/
 		gamestate.selectedShip = selectshippanel.gbpToShip.get(b);
 	}
 }
@@ -82,7 +79,6 @@ class FinishPlacementListener extends ChangeListener {
 			for(GridButtonPanel x: ssp.shipButtons){
 				x.setDisabled(true);
 			}
-			//ssp.remove();
 			gamestate.selectedShip = null;
 			pp.setPlacement(gamestate.p2Grid);
 			gamestate.shipPlacementPhase = false;
@@ -126,9 +122,7 @@ public class SelectShipPanel extends Table {
 		this.add(toggleOrientation).pad(5);
 		this.row();
 		Table t = new Table();
-		//setSkin(skin);
-		//this.add(new Label("Select a ship to place", skin));
-		//System.out.println("shipbuttons lengtg = "+ships);
+
 		shipButtons = new GridButtonPanel[ships.length];
 		for(int i = 0; i<shipButtons.length; i++){
 			shipButtons[i] = new GridButtonPanel(ships[i].getWidth(), ships[i].getHeight(), "=");

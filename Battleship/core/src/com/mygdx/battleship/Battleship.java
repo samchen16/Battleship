@@ -46,7 +46,6 @@ public class Battleship extends Game {
 		gamestate = new GameState(p1Ships, p2Ships);
 		rootTable = new Table();
 		rootTable.setFillParent(true);
-		//rootTable.debug();
 		p1View = new PlayerPanel(gamestate.p1Grid, gamestate.p2Grid, false);
 		p2View = new PlayerPanel(gamestate.p2Grid, gamestate.p1Grid, true);
 		float w = p1View.attackPanel.actors[0][0].getWidth();
@@ -59,7 +58,6 @@ public class Battleship extends Game {
 		p2View.debug();
 		rootTable.row();
 		rootTable.add(shipSelect).expand().fill();
-		//shipSelect.debug();
 		// Disables automatic rendering calls
 		Gdx.graphics.setContinuousRendering(false);
 		Gdx.graphics.requestRendering();
@@ -70,20 +68,17 @@ public class Battleship extends Game {
 		SelectShipPanelListener p1SelectShipListener = new SelectShipPanelListener (gamestate.p1Grid, gamestate, shipSelect);
 		FinishPlacementListener finishPlacementListener = new FinishPlacementListener(gamestate.p1Grid, gamestate, shipSelect, p2View.placementPanel); 
 		ToggleOrientationListener toggleOrientationListener = new ToggleOrientationListener(gamestate.p1Grid, gamestate, shipSelect);
-		//SelectShipPanelListener p2SelectShipListener = new SelectShipPanelListener (gamestate.p2Grid, gamestate, shipSelect);
 		PlacementPanelListener p1PlacementListener = new PlacementPanelListener(gamestate.p1Grid, gamestate, p1View.placementPanel);
 		PlacementPanelListener p2PlacementListener = new PlacementPanelListener(gamestate.p2Grid, gamestate, p2View.placementPanel);
 		try {
 			placeAI = new AIPlaceController(gamestate.p2Grid, p2Ships, p2View.placementPanel);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// Create attacking AI and ship placement AI
 		attackAI = new AIAttackController(gamestate.p1Grid, p2View.attackPanel, miltonBradley, p2AttackingListener);
 		
 		// Create labels to display player scores and stats
-		//rootTable.row();
 		Skin skin = new Skin();
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);
@@ -95,8 +90,8 @@ public class Battleship extends Game {
 		p1Stats = new Label(" ", labelStyle);
 		p2Stats = new Label(" ", labelStyle);
 		Table t = new Table();
-		t.add(p1Stats).pad(5);//.expand().fill();
-		t.add(p2Stats).pad(5);//.expand().fill();
+		t.add(p1Stats).pad(5);
+		t.add(p2Stats).pad(5);
 		rootTable.add(t);
 		stage.addActor(rootTable);
 	}
