@@ -83,8 +83,10 @@ public class GridButtonPanel extends Table{
 	public void setDisabled(boolean b) {
 		for (int i = 0; i < numCellsX; i++) {
 			for (int j = 0; j < numCellsY; j++) {
-				GridButton gb = (GridButton) actors[i][j];
-				gb.setDisabled(b);
+				if (actors[i][j] != null) {
+					GridButton gb = (GridButton) actors[i][j];
+					gb.setDisabled(b);
+				}
 			}
 		}
 	}

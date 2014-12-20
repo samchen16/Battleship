@@ -14,6 +14,7 @@ class AttackingPanelListener extends ChangeListener {
 	
 	Grid grid;
 	GameState gamestate;
+	AttackingPanel attackPanel;
 	
 	public boolean foundShip;
 	public Point recentHit;
@@ -25,7 +26,7 @@ class AttackingPanelListener extends ChangeListener {
 		foundShip = false;
 		destroyed = false;
 		recentHit = new Point();
-		
+		attackPanel = ap;
 		// Connect to view
 		for (int i = 0; i < ap.actors.length; i++) {
 			for (int j = 0; j < ap.actors [i].length; j++) {
@@ -39,7 +40,7 @@ class AttackingPanelListener extends ChangeListener {
     	if (!grid.isAttackable(b.x, b.y)) {
     		return;
     	}
-		grid.attack(b.x, b.y);
+		Ship s = grid.attack(b.x, b.y);
     	
     	// Change view depending on whether attack hit or missed
     	if (grid.isHit(b.x, b.y)) {
@@ -55,7 +56,10 @@ class AttackingPanelListener extends ChangeListener {
     		foundShip = false;
     		//System.out.println("miss " + b.x + " " + b.y);
     	}
-    	
+    	b.setDisabled(true);
+    	if (s != null && s.health == 0) {
+    		destroyed = true;
+    	}
     	// Switches turns
     	gamestate.playerTurn = !gamestate.playerTurn;
     	//System.out.println(gamestate.playerTurn);

@@ -1,6 +1,9 @@
 package com.mygdx.battleship;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
@@ -15,15 +18,15 @@ public class AIAttackController extends Actor{
 	Point maxShipSize;
 	double[][] hValues;
 	AttackingPanelListener apl;
+	ArrayList<Point> moves;
 	
 	// Grid cell that AI will attack
-	int targetIndex;
 	Point target;
 	
 	// Grid cell containing ship that AI most recently hit
 	boolean foundShip;
 	Point recentHit;
-	
+	boolean destroyed;
 	
 	public AIAttackController (Grid g, AttackingPanel ap, Ship[] sl, AttackingPanelListener apl2) {
 		grid = g;
@@ -36,6 +39,7 @@ public class AIAttackController extends Actor{
 		attackingPanel = ap;
 		ships = sl;
 		hValues = new double[grid.getNumCellsX()][grid.getNumCellsY()];
+		moves = new ArrayList<Point>();
 		
 		for (int x = 0; x < grid.getNumCellsX(); x++) {
 			for (int y = 0; y < grid.getNumCellsY(); y++) {
@@ -59,36 +63,63 @@ public class AIAttackController extends Actor{
 	public void decideTarget () {
 		foundShip = apl.foundShip;
 		recentHit = apl.recentHit;
+		destroyed = apl.destroyed;
 		
-		// If no ship has been found, pick a random grid cell to attack
-		if (!foundShip) {
-			int targetIndex = random.nextInt(attackList.size());
-			target = attackList.get(targetIndex);
-			return;
+		if (destroyed) {
+			moves.clear();
+			apl.destroyed = false;
+			destroyed = false;
+		}
+		
+		calculateHeuristic();
+		printHeuristic();
+		Point newTarget = new Point();
+		
+		// If lost track of ship, use previously searched moves if any
+		if (!foundShip && !moves.isEmpty()){
+			double maxHv = Double.MIN_VALUE;
+			for (Point p : moves) {
+				if (!attackList.contains(p)) {
+					continue;
+				}
+				if (hValues[p.x][p.y] > maxHv) {
+					maxHv = hValues[p.x][p.y];
+					newTarget.x = p.x;
+					newTarget.y = p.y;
+				}
+			}
+			moves.remove(newTarget);
 		}
 		
 		// Else target the grid cell with the highest heuristic function value
-		calculateHeuristic();
-		printHeuristic();
-		double maxHv = Double.MIN_VALUE;
-		
-		for (int x = -1; x < 2; x++) {
-			for (int y = -1; y < 2; y++) {
-				if (!attackList.contains(new Point(recentHit.x + x, recentHit.y + y))) {
-					continue;
-				}
-				if (inBounds(recentHit.x + x, recentHit.y + y, hValues) && hValues[recentHit.x + x][recentHit.y + y] > maxHv) {
-					maxHv = hValues[recentHit.x + x][recentHit.y + y];
-					target.x = recentHit.x + x;
-					target.y = recentHit.y + y;
-					System.out.println(maxHv);
+		if (foundShip) {
+			double maxHv = Double.MIN_VALUE;
+			for (int x = -1; x < 2; x++) {
+				for (int y = -1; y < 2; y++) {
+					if (!attackList.contains(new Point(recentHit.x + x, recentHit.y + y))) {
+						continue;
+					}
+					if (inBounds(recentHit.x + x, recentHit.y + y, hValues) && hValues[recentHit.x + x][recentHit.y + y] > maxHv) {
+						maxHv = hValues[recentHit.x + x][recentHit.y + y];
+						newTarget.x = recentHit.x + x;
+						newTarget.y = recentHit.y + y;
+						moves.add(new Point(recentHit.x + x, recentHit.y + y));
+					}
 				}
 			}
+			moves.remove(newTarget);
 		}
-								
-		targetIndex = attackList.lastIndexOf(target);
 		
-
+		if (!newTarget.equals(target)) {
+			target.x = newTarget.x;
+			target.y = newTarget.y;
+			return;
+		}
+		
+		// If no ship has been found, pick a random grid cell to attack
+		int targetIndex = random.nextInt(attackList.size());
+		target = attackList.get(targetIndex);
+				
 	}
 	
 	public void printHeuristic() {
@@ -104,7 +135,6 @@ public class AIAttackController extends Actor{
 	
 	public void attackTarget () {
 		// Send events to click button corresponding to the grid cell the AI wants to attack
-		System.out.println ("set to " + target.x + " " + target.y);
 		InputEvent e = new InputEvent();
 		e.setType(InputEvent.Type.touchDown);
 		InputEvent e2 = new InputEvent();
